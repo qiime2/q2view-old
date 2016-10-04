@@ -8,16 +8,12 @@
 
 import React from 'react';
 
-import Header from './Header';
-import Input from './Input';
+import image from '../../img/qiime_logo_large.png';
 
-const App = () => (
-    <div className="container-fluid">
-        <div className="col-md-10 col-md-offset-1">
-            <Header />
-            <Input />
-        </div>
+const Header = () => (
+    <div className="page-header">
+        <img className="img-responsive" alt="QIIME Logo" src={image} />
     </div>
 );
 
-export default App;
+export default Header;

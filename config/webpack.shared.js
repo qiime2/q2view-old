@@ -45,6 +45,10 @@ module.exports = function extendConfig(override, isDev) {
                 {
                     test: /\.css$/,
                     loader: cssLoader
+                },
+                {
+                    test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
+                    loader: 'url-loader'
                 }
             ]
         }
