@@ -8,6 +8,7 @@
 
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = function extendConfig(override, isDev) {
     var cssLoader = 'css-loader?modules&importLoaders=1' + // eslint-disable-line no-var
@@ -26,7 +27,14 @@ module.exports = function extendConfig(override, isDev) {
             path: path.resolve(__dirname, '../build'),
             filename: 'js/bundle.js'
         },
-        plugins: [],
+        plugins: [
+            new ServiceWorkerWebpackPlugin({
+                entry: path.join(__dirname, '../app/js/util/sw.js'),
+                excludes: [
+                    '**/*.hot-update.js'
+                ]
+            })
+        ],
         resolve: {
             extensions: ['', '.js', '.jsx']
         },
