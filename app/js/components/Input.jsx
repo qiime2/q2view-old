@@ -10,46 +10,37 @@ import React from 'react';
 
 import style from '../../css/Input.css';
 
-class Input extends React.Component {
-
-    onSubmitHandler(e) {
-        
-    }
-
-    render() {
-        return (
-            <div className={style.input}>
-                <form onSubmit={onSubmitHandler}>
-                    <div className="input-group">
-                        <span className="input-group-btn">
-                            <button
-                                type="button"
-                                className="btn btn-primary pull-left"
-                                onClick={() => {}}
-                            >
-                                <span
-                                    className="glyphicon glyphicon-import"
-                                />
-                                <span> Import</span>
-                            </button>
-                        </span>
-                        <input
-                            readOnly
-                            name="type"
-                            className="form-control"
-                            type="text"
-                            placeholder="QIIME 2 Visualization File"
+const Input = () => (
+    <div className={style.input}>
+        <form onSubmit={() => {}}>
+            <div className="input-group">
+                <span className="input-group-btn">
+                    <button
+                        type="button"
+                        className="btn btn-primary pull-left"
+                        onClick={() => {}}
+                    >
+                        <span
+                            className="glyphicon glyphicon-import"
                         />
-                        <span className="input-group-btn">
-                            <button type="submit" className="btn btn-success">
-                                View!
-                            </button>
-                        </span>
-                    </div>
-                </form>
+                        <span> Import</span>
+                    </button>
+                </span>
+                <input
+                    readOnly
+                    name="type"
+                    className="form-control"
+                    type="text"
+                    placeholder="QIIME 2 Visualization File"
+                />
+                <span className="input-group-btn">
+                    <button type="submit" className="btn btn-success">
+                        View!
+                    </button>
+                </span>
             </div>
-        );
-    }
-}
+        </form>
+    </div>
+);
 
 export default Input;

@@ -12,10 +12,9 @@ import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 import '!style-loader!css-loader!bootstrap-css-only'; // eslint-disable-line
 import App from './components/App';
-import ServiceWorker from './util/sw.js';
 
 if ('serviceWorker' in navigator) {
-  const registration = runtime.register();
+    runtime.register();
 }
 
 render(
