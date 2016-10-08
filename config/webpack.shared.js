@@ -12,7 +12,7 @@ const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = function extendConfig(override, isDev) {
     var cssLoader = 'css-loader?modules&importLoaders=1' + // eslint-disable-line no-var
-                    '&localIdentName=[name]--[local]-[hash:base64:5]!postcss-loader';
+                    '&localIdentName=[name]--[local]-[hash:base64:5]';
     if (!isDev) {
         cssLoader = ExtractTextPlugin.extract('style-loader', cssLoader);
     } else {
@@ -21,7 +21,7 @@ module.exports = function extendConfig(override, isDev) {
 
     const defaultConfig = {
         entry: [
-            path.resolve(__dirname, '../app/js/main.jsx')
+            path.resolve(__dirname, '../app/js/main.js')
         ],
         output: {
             path: path.resolve(__dirname, '../build'),
