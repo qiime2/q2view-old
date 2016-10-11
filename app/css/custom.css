@@ -8,9 +8,25 @@ The full license is in the file LICENSE, distributed with this software.
 ----------------------------------------------------------------------------
 */
 
+body {
+    padding-top: 100px;
+}
+
 #dropzone {
-    margin: 30px;
-    width: 500px;
     height: 300px;
+    line-height: 300px;
     border: 3px dotted black;
+}
+
+.navbar-brand {
+    height: 80px;
+}
+
+.nav >li >a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.navbar-toggle {
+    padding: 10px;
+    margin: 25px 15px 25px 0;
 }
