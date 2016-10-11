@@ -5,11 +5,11 @@
 //
 // The full license is in the file LICENSE, distributed with this software.
 // ----------------------------------------------------------------------------
-
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import JSZip from 'jszip';
 
 import '!style-loader!css-loader!bootstrap-css-only'; // eslint-disable-line
+import '!style-loader!css-loader!../css/custom.css';
 import image from '../img/qiime_logo_large.png';
 
 if ('serviceWorker' in navigator) {
@@ -21,39 +21,57 @@ if ('serviceWorker' in navigator) {
 const logo = document.getElementById('logo');
 logo.src = image;
 
-const fileinput = document.getElementById('fileinput');
-fileinput.addEventListener('change', (e) => {
+function validateArtifact(file) {
     const zip = new JSZip();
-    zip.loadAsync(e.target.files[0])
-    .then((data) => {
-        let dataObjects = Object.keys(data.files).filter(key => key.split('/')[1] === 'data').map(key => data.files[key]);
-        dataObjects = dataObjects.map((dataObject) => {
-            const obj = dataObject;
-            obj.name = `./${obj.name.split('/').slice(2).join('/')}`;
-            if (obj.name.endsWith('index.html')) {
-                obj.name = './visualization.html';
-            }
-            return obj;
+    return zip.loadAsync(file).then((zip) => {
+        console.log(zip);
+        // Verify layout:
+        // 1) Root dir named with UUID, only object in zip root
+        // 2) Root dir has subdir named `data`
+        // 3) Data dir has at least one file that matches `index.*`
+
+        // http://stackoverflow.com/a/13653180
+        const uuidRegEx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+        zip.forEach((relPath, file) => {
+            console.log(relPath, file);
+            const pathParts = file.name.split('/'); // ZIP uses '/' on all platforms
+            if (!uuidRegEx.test(pathParts[0])) { return; };
         });
-        new Promise((resolve, reject) => { // eslint-disable-line
-            const messageChannel = new MessageChannel();
-            messageChannel.port1.onmessage = (event) => {
-                if (event.data.error) {
-                    reject(event.data.error);
-                } else {
-                    resolve(event.data);
-                }
-            };
-            dataObjects.forEach((dataObject) => {
-                dataObject.async('uint8array').then((arr) => {
-                    const dict = {};
-                    dict[dataObject.name] = arr;
-                    navigator.serviceWorker.controller.postMessage(dict);
-                });
-            });
-        });
-    })
-    .then(() => {
-        setTimeout(() => { window.location.href = `${window.location.origin}/visualization.html`; }, 2000);
     });
-});
+}
+
+function sendFile(file) {
+    const uri = 'CHANGEME'; // TODO: fix this
+    const xhr = new XMLHttpRequest();
+    const fd = new FormData();
+
+    xhr.open('POST', uri, true);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // TODO: handle response here
+            alert(xhr.responseText);
+        }
+    };
+    validateArtifact(file);
+    fd.append('vizFile', file);
+    xhr.send(fd);
+}
+
+window.onload = () => {
+    const dropzone = document.getElementById('dropzone');
+
+    dropzone.ondragover = dropzone.ondragenter = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    dropzone.ondrop = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        var filesArray = event.dataTransfer.files;
+        for (var i=0; i<filesArray.length; i++) {
+            sendFile(filesArray[i]);
+        }
+    }
+}

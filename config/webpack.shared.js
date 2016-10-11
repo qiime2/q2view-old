@@ -36,7 +36,7 @@ module.exports = function extendConfig(override, isDev) {
             })
         ],
         resolve: {
-            extensions: ['', '.js', '.jsx']
+            extensions: ['', '.js']
         },
         module: {
             loaders: [
