@@ -1,24 +1,37 @@
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || fetch(event.request);
+self.addEventListener('fetch', (fetchEvent) => {
+    fetchEvent.respondWith(
+        self.clients.get(fetchEvent.clientId)
+
+        .then(client => new Promise((accept, reject) => {
+            let filename = fetchEvent.request.url.split(/[?#]/)[0];
+            let ext = filename.split('.').pop();
+            let channel = new MessageChannel();
+            channel.port1.onmessage = (event) => {
+                accept([event.data, ext]);
+            }
+
+            client.postMessage({
+                'type': 'sw-fetch',
+                'file': filename
+            }, [channel.port2]);
+        }))
+
+        .then([data, ext] => {
+            mimetype = extmap[ext];
+            if (!mimetype) {
+                throw Error('No mapping to MIME-type for extension ' + ext);
+            }
+            return new Response(data, {
+                headers: new Headers({ 'Content-Type':  mimetype})
+            });
         })
+
     );
 });
 
-self.addEventListener('message', (event) => {
-    event.waitUntil(
-        caches.open('v1').then((cache) => {
-            const url = Object.keys(event.data)[0];
-            const ext = url.split('.')[url.split('.').length - 1];
-            cache.put(url, new Response(event.data[url], {
-                headers: new Headers({ 'Content-Type': mimetype[ext] }) // eslint-disable-line no-use-before-define
-            }));
-        })
-    );
-});
 
-const mimetype = {
+// Add any further extensions here:
+const extmap = {
     123: 'application/vnd.lotus-1-2-3',
     '3dml': 'text/vnd.in3d.3dml',
     '3g2': 'video/3gpp2',
@@ -318,6 +331,7 @@ const mimetype = {
     jpm: 'video/jpm',
     js: 'application/javascript',
     json: 'application/json',
+    jsonp: 'application/javascript',
     kar: 'audio/midi',
     karbon: 'application/vnd.kde.karbon',
     kfo: 'application/vnd.kde.kformula',
