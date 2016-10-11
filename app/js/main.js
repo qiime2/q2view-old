@@ -92,8 +92,15 @@ function loadFile(file) {
     // TODO: do something
 }
 
+function sendFiles(files) {
+   for (let i = 0; i < files.length; i += 1) {
+       sendFile(files[i]);
+   }
+}
+
 window.onload = () => {
     const dropzone = document.getElementById('dropzone');
+    const picker = document.getElementById('picker');
 
     dropzone.ondragover = dropzone.ondragenter = (event) => {
         event.stopPropagation();
@@ -103,10 +110,15 @@ window.onload = () => {
     dropzone.ondrop = (event) => {
         event.stopPropagation();
         event.preventDefault();
-
-        var filesArray = event.dataTransfer.files;
-        for (var i=0; i<filesArray.length; i++) {
-            loadFile(filesArray[i]);
-        }
+        sendFiles(event.dataTransfer.files);
     }
+
+    dropzone.onclick = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        picker.click();
+    }
+
+    picker.onchange = () => sendFiles(picker.files);
 }
+
