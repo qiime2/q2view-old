@@ -24,37 +24,72 @@ logo.src = image;
 function validateArtifact(file) {
     const zip = new JSZip();
     return zip.loadAsync(file).then((zip) => {
-        console.log(zip);
         // Verify layout:
         // 1) Root dir named with UUID, only object in zip root
-        // 2) Root dir has subdir named `data`
+        // 2) UUID dir has a file named `VERSION`
+        // 2) UUID dir has subdir named `data`
         // 3) Data dir has at least one file that matches `index.*`
+        const files = Object.keys(zip.files);
+        const parsedPaths = [];
+        files.forEach((file) => {
+            const fileParts = file.split('/');
+            for (let i = 1; i <= fileParts.length; i += 1) {
+                parsedPaths.push(fileParts.slice(0, i).join("/"));
+            }
+        });
+        const uniquePaths = parsedPaths.filter((value, index, self) => {
+            return self.indexOf(value) === index;
+        });
+
+        console.log(uniquePaths);
 
         // http://stackoverflow.com/a/13653180
         const uuidRegEx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-        zip.forEach((relPath, file) => {
-            console.log(relPath, file);
-            const pathParts = file.name.split('/'); // ZIP uses '/' on all platforms
-            if (!uuidRegEx.test(pathParts[0])) { return; };
+        let allInUUID = true;
+        uniquePaths.every((path) => {
+            const parts = path.split('/');
+            if (!uuidRegEx.test(parts[0])) {
+                allInUUID = false;
+                return false; // break
+            }
+            return true;
         });
+
+        // If every path has UUID, then proceed
+        if (!allInUUID) {
+            return undefined;
+        }
+
+        const UUID = uniquePaths[0].split('/')[0];
+
+        // Search for VERSION file
+        if (uniquePaths.find(path => (path === `${UUID}/VERSION`)) === undefined) {
+            return undefined;
+        }
+
+         // Search for data dir
+        if (uniquePaths.find(path => (path === `${UUID}/data`)) === undefined) {
+            return undefined;
+        }
+
+        // Search for index
+        if (uniquePaths.find(path => (path === `${UUID}/data/index.html`)) === undefined) {
+            return undefined;
+        }
+
+        return zip
     });
 }
 
-function sendFile(file) {
-    const uri = 'CHANGEME'; // TODO: fix this
-    const xhr = new XMLHttpRequest();
-    const fd = new FormData();
-
-    xhr.open('POST', uri, true);
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // TODO: handle response here
-            alert(xhr.responseText);
+function loadFile(file) {
+    validateArtifact(file).then((zip) => {
+        console.log(zip);
+        if (zip === undefined) {
+            alert('Invalid QZV file');
         }
-    };
-    validateArtifact(file);
-    fd.append('vizFile', file);
-    xhr.send(fd);
+    });
+
+    // TODO: do something
 }
 
 window.onload = () => {
@@ -71,7 +106,7 @@ window.onload = () => {
 
         var filesArray = event.dataTransfer.files;
         for (var i=0; i<filesArray.length; i++) {
-            sendFile(filesArray[i]);
+            loadFile(filesArray[i]);
         }
     }
 }
