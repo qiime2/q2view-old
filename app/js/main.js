@@ -101,24 +101,24 @@ function validateArtifact(file) {
 
         // If every path has UUID, then proceed
         if (!allInUUID) {
-            return undefined;
+            throw Error('Invalid QZV file');
         }
 
         const UUID = uniquePaths[0].split('/')[0];
 
         // Search for VERSION file
         if (uniquePaths.find(path => (path === `${UUID}/VERSION`)) === undefined) {
-            return undefined;
+            throw Error('Invalid QZV file');
         }
 
          // Search for data dir
         if (uniquePaths.find(path => (path === `${UUID}/data`)) === undefined) {
-            return undefined;
+            throw Error('Invalid QZV file');
         }
 
         // Search for index
         if (uniquePaths.find(path => (path === `${UUID}/data/index.html`)) === undefined) {
-            return undefined;
+            throw Error('Invalid QZV file');
         }
 
         return [zip, UUID]
@@ -127,10 +127,6 @@ function validateArtifact(file) {
 
 function loadFile(file) {
     let zip = validateArtifact(file).then(([zip, UUID]) => {
-        if (zip === undefined) {
-            alert('Invalid QZV file');
-        }
-
         let dropzone = document.getElementById('dropzone')
         dropzone.innerHTML =
             '<span class="glyphicon glyphicon-refresh spinning"></span>';
@@ -138,6 +134,7 @@ function loadFile(file) {
 
         return [zip, UUID];
     });
+    zip.catch(e => { alert('Invalid QZV file.') });
 
     Promise.all([zip, serviceChannel]).then(([[zip, UUID], port]) => {
         console.log(zip, port);
