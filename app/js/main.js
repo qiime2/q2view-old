@@ -7,16 +7,62 @@
 // ----------------------------------------------------------------------------
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import JSZip from 'jszip';
+import uuid from 'node-uuid';
+import _ from 'lodash';
+import { TimeoutAt, WaitUntil } from './util/promise.js';
 
 import '!style-loader!css-loader!bootstrap-css-only'; // eslint-disable-line
 import '!style-loader!css-loader!../css/custom.css';
 import image from '../img/qiime_logo_large.png';
 
-if ('serviceWorker' in navigator) {
-    runtime.register();
-} else {
-    alert('This browser does not support this website.');
-}
+
+const SESSION_UUID = uuid.v4();
+let serviceChannel = new Promise((resolve, reject) => {
+    let channel = new MessageChannel();
+
+    if ('serviceWorker' in navigator) {
+        runtime.register().then(reg => {
+            return Promise.race([
+                TimeoutAt(3000),
+                WaitUntil(() => reg.active !== null)
+            ]).then(_ => reg.active);
+        }).then(serviceWorker => {
+            let timedOut = false;
+            let hasResponded = false;
+            let message = {
+                type: 'NEW_SESSION',
+                session: SESSION_UUID
+            }
+
+            channel.port1.onmessage = (event) => {
+                // cleanup listener
+                channel.port1.onmessage = null;
+                hasResponded = true;
+                if (!timedOut) {
+                    if (_.isEqual(event.data, message)) {
+                        resolve(channel.port1);
+                    } else {
+                        reject(`failed to mirror session ${event.data}`);
+                    }
+                }
+            }
+
+            serviceWorker.postMessage(message, [channel.port2]);
+            setTimeout(() => {
+                if (!hasResponded) {
+                    timedOut = true;
+                    reject('Session setup timed out.');
+                }
+            }, 3000)
+
+        });
+    } else {
+        reject('Unsuported browser');
+    }
+})
+
+serviceChannel.catch((e) => console.log(e));
+
 
 const logo = document.getElementById('logo');
 logo.src = image;
@@ -40,8 +86,6 @@ function validateArtifact(file) {
         const uniquePaths = parsedPaths.filter((value, index, self) => {
             return self.indexOf(value) === index;
         });
-
-        console.log(uniquePaths);
 
         // http://stackoverflow.com/a/13653180
         const uuidRegEx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -77,24 +121,47 @@ function validateArtifact(file) {
             return undefined;
         }
 
-        return zip
+        return [zip, UUID]
     });
 }
 
 function loadFile(file) {
-    validateArtifact(file).then((zip) => {
-        console.log(zip);
+    let zip = validateArtifact(file).then(([zip, UUID]) => {
         if (zip === undefined) {
             alert('Invalid QZV file');
         }
+
+        let dropzone = document.getElementById('dropzone')
+        dropzone.innerHTML =
+            '<span class="glyphicon glyphicon-refresh spinning"></span>';
+        dropzone.onclick = (e) => null;
+
+        return [zip, UUID];
     });
+
+    Promise.all([zip, serviceChannel]).then(([[zip, UUID], port]) => {
+        console.log(zip, port);
+        port.onmessage = (event) => {
+            console.log(event.data)
+            switch (event.data.type) {
+                case 'GET_FILE_BLOB':
+                    zip.file(event.data.filename).async("uint8array").then((data) => {
+                        event.ports[0].postMessage(data);
+                    });
+            }
+        }
+        let index = ['_', SESSION_UUID, UUID, 'data', 'index.html'].join('/');
+        document.getElementById('uploader').innerHTML =
+            `<iframe src="/${index}" height="100%"></iframe>`;
+
+    })
 
     // TODO: do something
 }
 
 function sendFiles(files) {
    for (let i = 0; i < files.length; i += 1) {
-       sendFile(files[i]);
+       loadFile(files[i]);
    }
 }
 
@@ -121,4 +188,3 @@ window.onload = () => {
 
     picker.onchange = () => sendFiles(picker.files);
 }
-
