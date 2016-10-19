@@ -1,5 +1,5 @@
 {
-  "name": "qiime-view",
+  "name": "qiime2-view",
   "version": "0.0.1",
   "description": "View QIIME 2 Visualizations on the web!",
   "main": "index.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qiime2/qiime-view.git"
+    "url": "git+https://github.com/qiime2/view.qiime.org.git"
   },
   "author": "QIIME 2 Development Team",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/qiime2/qiime-view/issues"
+    "url": "https://github.com/qiime2/view.qiime2.org/issues"
   },
-  "homepage": "https://github.com/qiime2/qiime-view#readme",
+  "homepage": "https://github.com/qiime2/view.qiime2.org#README.md",
   "dependencies": {
     "bootstrap-css-only": "^3.3.6",
     "extract-text-webpack-plugin": "^1.0.1",
