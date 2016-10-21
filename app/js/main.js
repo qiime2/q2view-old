@@ -13,7 +13,7 @@ import { TimeoutAt, WaitUntil } from './util/promise.js';
 
 import '!style-loader!css-loader!bootstrap-css-only'; // eslint-disable-line
 import '!style-loader!css-loader!../css/custom.css';
-import image from '../img/qiime_logo_large.png';
+import image from '../img/qiime2-rect-200.png';
 
 
 const SESSION_UUID = uuid.v4();
@@ -128,8 +128,7 @@ function validateArtifact(file) {
 function loadFile(file) {
     let zip = validateArtifact(file).then(([zip, UUID]) => {
         let dropzone = document.getElementById('dropzone')
-        dropzone.innerHTML =
-            '<span class="glyphicon glyphicon-refresh spinning"></span>';
+        dropzone.innerHTML = loaderSpan;
         dropzone.onclick = (e) => null;
 
         return [zip, UUID];
@@ -160,12 +159,18 @@ function sendFiles(files) {
    }
 }
 
+const loaderSpan = '<span class="glyphicon glyphicon-refresh spinning"></span>';
+
 window.onload = () => {
     const queryParams = _.chain( location.search.slice(1).split('&') )
         .map(function(item) { if (item) return item.split('='); })
         .compact().fromPairs().value();
 
     if ('f' in queryParams) {
+        let dropzone = document.getElementById('dropzone')
+        dropzone.innerHTML = loaderSpan;
+        dropzone.onclick = (e) => null;
+
         fetch(queryParams.f)
             .then(function(response) {
                 return response.blob();
