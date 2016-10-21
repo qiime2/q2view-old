@@ -1,1 +1,1 @@
-# qiime2-view
+# q2view
