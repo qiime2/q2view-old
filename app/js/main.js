@@ -57,11 +57,11 @@ let serviceChannel = new Promise((resolve, reject) => {
 
         });
     } else {
-        reject('Unsuported browser');
+        reject('Unsupported browser');
     }
 })
 
-serviceChannel.catch((e) => console.log(e));
+serviceChannel.catch((e) => console.log('serviceChannel err', e));
 
 
 const logo = document.getElementById('logo');
@@ -137,9 +137,9 @@ function loadFile(file) {
     zip.catch(e => { alert('Invalid QZV file.') });
 
     Promise.all([zip, serviceChannel]).then(([[zip, UUID], port]) => {
-        console.log(zip, port);
+        console.log('zip', zip, 'port', port);
         port.onmessage = (event) => {
-            console.log(event.data)
+            console.log('onmessage event', event.data)
             switch (event.data.type) {
                 case 'GET_FILE_BLOB':
                     zip.file(event.data.filename).async("uint8array").then((data) => {
@@ -152,8 +152,6 @@ function loadFile(file) {
             `<iframe src="/${index}" height="100%"></iframe>`;
 
     })
-
-    // TODO: do something
 }
 
 function sendFiles(files) {
@@ -163,6 +161,20 @@ function sendFiles(files) {
 }
 
 window.onload = () => {
+    const queryParams = _.chain( location.search.slice(1).split('&') )
+        .map(function(item) { if (item) return item.split('='); })
+        .compact().fromPairs().value();
+
+    if ('f' in queryParams) {
+        fetch(queryParams.f)
+            .then(function(response) {
+                return response.blob();
+            })
+            .then(function(artifact) {
+                sendFiles([artifact]);
+            });
+    }
+
     const dropzone = document.getElementById('dropzone');
     const picker = document.getElementById('picker');
 

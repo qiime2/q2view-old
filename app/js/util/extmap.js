@@ -1,5 +1,5 @@
-
 // Add any further extensions here:
+
 export default {
     '123': 'application/vnd.lotus-1-2-3',
     '3dml': 'text/vnd.in3d.3dml',
