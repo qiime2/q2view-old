@@ -1,0 +1,41 @@
+{{!--------------------------------------------------------------------------
+   Copyright (c) 2016--, QIIME development team.
+
+   Distributed under the terms of the Modified BSD License.
+
+   The full license is in the file LICENSE, distributed with this software.
+   --------------------------------------------------------------------------}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8" />
+        <link rel='shortcut icon' type='image/x-icon' href='{{favicon}}' />
+        <title>View</title>
+        {{!-- imported via `file` loader in `app/main.jsx` --}}
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        {{#if store}}
+        <script>window.__DEHYDRATED_STORE__ = {{{store}}};</script>
+        {{else}}
+        <script>window.__DEHYDRATED_STORE__ = {};</script>
+        {{/if}}
+    </head>
+    <body>
+        <div id="main">
+            {{!-- used for static rendering only --}}
+            {{#if content}}
+            {{{content}}}
+            {{/if}}
+            <noscript>
+                <style>.js-needed {display:none;}</style>
+                <div style="text-align:center;background-color:transparent;" class="jumbotron">
+                    <h1>JavaScript Required</h1>
+                    <p style="margin-top:2em;">
+                        Sorry, this page requires JavaScript to function.
+                        Please enable it in your browser for this domain.
+                    </p>
+                </div>
+            </noscript>
+        </div>
+        <script src="/js/bundle.js"></script>
+    </body>
+</html>

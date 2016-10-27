@@ -15,7 +15,7 @@ module.exports = extendConfig((config) => {
     return {
         plugins: [...config.plugins,
             new HtmlWebpackPlugin({
-                template: 'app/index.html',
+                template: 'app/index.html.handlebars',
                 inject: true
             })
         ],
