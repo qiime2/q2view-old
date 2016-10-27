@@ -11,6 +11,10 @@ import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 import { Router, RouterContext, match, createMemoryHistory, browserHistory,
          IndexRoute, Route, createRoutes } from 'react-router';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
+import thunk from 'redux-thunk';
 
 import ToolbarWindow from './ToolbarWindow';
 import Home from './pages/Home';
@@ -20,15 +24,15 @@ import Provenance from './pages/Provenance';
 import BadURL from './pages/BadURL';
 import IncompatibleBrowser from './pages/IncompatibleBrowser';
 import indexHTML from './index.html.handlebars';
-import { onEnter, onChange } from './lib/init';
+import { makeRouteProps } from './lib/init';
 
 import '!file?name=/css/bootstrap.min.css!bootstrap/dist/css/bootstrap.min.css';
 import '!file?name=/css/bootstrap.min.css.map!bootstrap/dist/css/bootstrap.min.css.map';
-import favicon from '!file?name=/img/favicon-[hash:6].ico!./assets/favicon.ico';
+import favicon from '!file?name=/img/favicon-[hash:6].ico!./favicon.ico';
 
 
-const routes = (
-    <Route path="/" component={ToolbarWindow} onEnter={onEnter} onChange={onChange}>
+const makeRoutes = (dispatch) => (
+    <Route path="/" component={ToolbarWindow} {...makeRouteProps(dispatch)}>
         <IndexRoute component={Home} />
         <Route path="visualization" component={Visualization} />
         <Route path="peek" component={Peek} />
@@ -38,26 +42,50 @@ const routes = (
     </Route>
 );
 
+const rootReducer = combineReducers({routing: routerReducer});
+
+const makeMiddleware = (history) => applyMiddleware(
+    thunk,
+    routerMiddleware(history)
+);
 
 // Live browser context
 if (typeof document !== 'undefined') {
-    // window.addEventListener("beforeunload", (event) => {
-    //     const confirmationMessage = "You will lose your current view.";
-    //     event.returnValue = confirmationMessage;
-    //     return confirmationMessage
-    // });
+    window.addEventListener("beforeunload", (event) => {
+        const confirmationMessage = "You will lose your current view.";
+        event.returnValue = confirmationMessage;
+        return confirmationMessage
+    });
+    const store = createStore(rootReducer,
+                              window.__DEHYDRATED_STORE__,
+                              makeMiddleware(browserHistory));
+    const history = syncHistoryWithStore(browserHistory, store);
 
-    ReactDOM.render(<Router history={browserHistory} routes={routes} />,
-                    document.getElementById('main'));
+    ReactDOM.render((
+        <Provider store={store}>
+            <Router history={history} routes={makeRoutes(store.dispatch)} />
+        </Provider>), document.getElementById('main'));
 }
 
 // Static render context
 export default (locals, callback) => {
-    const history = createMemoryHistory();
+    let history = createMemoryHistory();
+    const store = createStore(rootReducer, makeMiddleware(history));
+    history = syncHistoryWithStore(history, store);
     const location = history.createLocation(locals.path);  // the current path
-    const store = JSON.stringify({foo: 'bar', x: [1, 2, 3]});
+    const routes = makeRoutes(store.dispatch);
+
     match({ routes, location }, (error, redirectLocation, renderProps) => {
-        const content = ReactDOMServer.renderToString(<RouterContext {...renderProps} />);
-        callback(null, indexHTML({store, favicon, content}));
+        const content = ReactDOMServer.renderToString(
+            <Provider store={store}>
+                <RouterContext {...renderProps} />
+            </Provider>
+        );
+
+        callback(null, indexHTML({
+            store: JSON.stringify(store.getState()),
+            favicon,
+            content
+        }));
     });
 }
