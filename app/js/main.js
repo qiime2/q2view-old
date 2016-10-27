@@ -171,7 +171,9 @@ window.onload = () => {
         dropzone.innerHTML = loaderSpan;
         dropzone.onclick = (e) => null;
 
-        fetch(queryParams.f)
+        const decoded = decodeURIComponent(queryParams.f);
+
+        fetch(decoded)
             .then(function(response) {
                 return response.blob();
             })
