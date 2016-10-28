@@ -166,14 +166,16 @@ window.onload = () => {
         .map(function(item) { if (item) return item.split('='); })
         .compact().fromPairs().value();
 
-    if ('f' in queryParams) {
+    let qp = undefined;
+    if ('f' in queryParams) { qp = queryParams.f; }
+    if ('src' in queryParams) { qp = queryParams.src; }
+
+    if (qp !== undefined) {
         let dropzone = document.getElementById('dropzone')
         dropzone.innerHTML = loaderSpan;
         dropzone.onclick = (e) => null;
 
-        const decoded = decodeURIComponent(queryParams.f);
-
-        fetch(decoded)
+        fetch(decodeURIComponent(qp))
             .then(function(response) {
                 return response.blob();
             })
