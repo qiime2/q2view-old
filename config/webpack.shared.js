@@ -25,7 +25,7 @@ module.exports = function extendConfig(override, isDev) {
         ],
         output: {
             path: path.resolve(__dirname, '../build'),
-            filename: '/js/bundle.js',
+            filename: '/js/bundle-[hash].js',
             libraryTarget: 'umd'
         },
         devtool: "source-map",

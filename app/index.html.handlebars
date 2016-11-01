@@ -9,7 +9,9 @@
 <html>
     <head>
         <meta charset="utf8" />
+        {{#if favicon}}
         <link rel='shortcut icon' type='image/x-icon' href='{{favicon}}' />
+        {{/if}}
         <title>View</title>
         {{!-- imported via `file` loader in `app/main.jsx` --}}
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
@@ -21,21 +23,25 @@
     </head>
     <body>
         <div id="main">
-            {{!-- used for static rendering only --}}
+            {{!-- static render --}}
             {{#if content}}
             {{{content}}}
             {{/if}}
             <noscript>
+                {{!-- css class applied by ToolbarWindow/Content --}}
                 <style>.js-needed {display:none;}</style>
                 <div style="text-align:center;background-color:transparent;" class="jumbotron">
                     <h1>JavaScript Required</h1>
                     <p style="margin-top:2em;">
                         Sorry, this page requires JavaScript to function.
-                        Please enable it in your browser for this domain.
+                        Please enable it in your browser for this domain name.
                     </p>
                 </div>
             </noscript>
         </div>
-        <script src="/js/bundle.js"></script>
+        {{!-- static render --}}
+        {{#if bundle}}
+        <script src="{{bundle}}"></script>
+        {{/if}}
     </body>
 </html>

@@ -20,7 +20,7 @@ export default () => (
             <Col md={6} mdPush={6} style={{'margin-bottom': '4em'}}>
                 <a href={downloadFirefox}><img src={firefox} /></a>
                 <h3>Download <strong><a href={downloadFirefox}>Mozilla Firefox&reg;</a></strong></h3>
-                <p>(requires version 47 or later)</p>
+                <p>(requires version 47 or later;<br />will not work in private browsing)</p>
             </Col>
             <Col md={6} mdPull={6}>
                 <a href={downloadChrome}><img src={chrome} /></a>

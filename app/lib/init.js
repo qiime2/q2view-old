@@ -1,7 +1,7 @@
 import { push } from 'react-router-redux';
 
 const redirect = (path) => (dispatch) => {
-    // Prevent infinite recursion
+    // Prevent infinite recursion in `onEnter` from `react-router`
     window.setTimeout(() => dispatch(push(path)), 0);
 }
 

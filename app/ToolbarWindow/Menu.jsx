@@ -30,26 +30,31 @@ export default class Menu extends React.Component {
             <Navbar style={{'margin-bottom': 0}}>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Link to='/'>q2view</Link>
+                        {/* Hitting home *should* unload the document */}
+                        <a href='/'>q2view</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav pullRight={true}>
-                        <NavDropdown title="Visualization">
-                            <MenuItem {...this.makeLinkProps('/visualization', {'type': 'html'})}>
-                                html
-                            </MenuItem>
-                            <MenuItem {...this.makeLinkProps('/visualization', {'type': 'svg'})}>
-                                svg
-                            </MenuItem>
-                            <MenuItem {...this.makeLinkProps('/visualization', {'type': 'csv'})}>
-                                csv
-                            </MenuItem>
-                        </NavDropdown>
+                    {this.props.resultType === 'visualization' && (
+                        <NavItem {...this.makeLinkProps('/visualization', {'type': 'html'})}>
+                            Visualization
+                        </NavItem>
+                    )}
+                    {this.props.resultType === 'artifact' && (
+                        <NavItem {...this.makeLinkProps('/peek')}>
+                            Peek
+                        </NavItem>
+                    )}
+                    {this.props.hasProvenance && (
                         <NavItem {...this.makeLinkProps('/provenance')}>
                             Provenance
                         </NavItem>
+                    )}
+                    <NavItem {...this.makeLinkProps('/provenance')}>
+                        Provenance
+                    </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
