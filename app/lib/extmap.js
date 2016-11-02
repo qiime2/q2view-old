@@ -816,6 +816,7 @@ export default {
     xvml: 'application/xv+xml',
     xwd: 'image/x-xwindowdump',
     xyz: 'chemical/x-xyz',
+    yaml: 'text/x-yaml',
     zaz: 'application/vnd.zzazz.deck+xml',
     zip: 'application/zip',
     zir: 'application/vnd.zul',

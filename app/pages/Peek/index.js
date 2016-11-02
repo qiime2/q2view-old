@@ -2,8 +2,12 @@ import { connect } from 'react-redux';
 
 import component from './component';
 
-import dx from './dux';
+import dx, { getMetadata } from './dux';
 
 export { dx as peekDux };
 
-export default connect()(component);
+const mapStateToProps = (state) => ({
+    metadata: getMetadata(state)
+})
+
+export default connect(mapStateToProps)(component);

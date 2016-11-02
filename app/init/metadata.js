@@ -1,9 +1,12 @@
 import { updateLoadMessage } from '../Loader/dux';
+import { getReader } from './dux';
+import { setMetadata } from '../pages/Peek/dux';
 
-export default () => (dispatch, getState) => (
-    new Promise((resolve, reject) => {
-        dispatch(updateLoadMessage('loading metadata'));
+export default () => (dispatch, getState) => {
+    const reader = getReader(getState());
+    dispatch(updateLoadMessage('loading metadata'));
 
-        resolve();
-    })
-);
+    return reader.getMetadata().then(metadata => {
+        dispatch(setMetadata(metadata));
+    });
+};

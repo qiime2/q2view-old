@@ -1,6 +1,16 @@
+export const readBlobAsText = (blob) => (
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            resolve(reader.result);
+        }
+        reader.readAsText(blob, 'utf8');
+    })
+)
+
 export const TimeoutAt = (timeout, reason = 'Timed out') => (
     new Promise((resolve, reject) => {
-        setTimeout(() => { reject('Timed Out'); }, timeout);
+        setTimeout(() => { reject(reason); }, timeout);
     })
 );
 

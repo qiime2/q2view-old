@@ -11,7 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = function extendConfig(override, isDev) {
-    var cssLoader = 'css-loader?modules&importLoaders=1' + // eslint-disable-line no-var
+    let cssLoader = 'css-loader?modules&importLoaders=1' +
                     '&localIdentName=[name]--[local]-[hash:base64:5]';
     if (!isDev) {
         cssLoader = ExtractTextPlugin.extract('style-loader', cssLoader);
@@ -21,6 +21,7 @@ module.exports = function extendConfig(override, isDev) {
 
     const defaultConfig = {
         entry: [
+            'babel-polyfill',
             path.resolve(__dirname, '../app/main.jsx')
         ],
         output: {
@@ -28,7 +29,7 @@ module.exports = function extendConfig(override, isDev) {
             filename: '/js/bundle-[hash].js',
             libraryTarget: 'umd'
         },
-        devtool: "source-map",
+        devtool: 'source-map',
         plugins: [
             new ServiceWorkerWebpackPlugin({
                 entry: path.join(__dirname, '../app/service-worker.js'),
@@ -64,7 +65,7 @@ module.exports = function extendConfig(override, isDev) {
                 {
                     test: /\.handlebars$/,
                     loader: 'handlebars'
-                },
+                }
             ]
         }
     };

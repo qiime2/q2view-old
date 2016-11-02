@@ -5,7 +5,7 @@
 //
 // The full license is in the file LICENSE, distributed with this software.
 // ----------------------------------------------------------------------------
-
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
@@ -52,12 +52,6 @@ const makeMiddleware = (history) => applyMiddleware(
 
 // Live browser context, executed only in a browser
 if (typeof document !== 'undefined') {
-
-    if (typeof window.Promise === 'undefined') {
-        // so many things aren't going to work, don't even try to do anything
-        window.location = '/incompatible-browser/';
-    }
-
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     const store = createStore(rootReducer,
                               window.__DEHYDRATED_STORE__,
@@ -76,7 +70,6 @@ if (typeof document !== 'undefined') {
     store.dispatch(navigationAction(history.getCurrentLocation()));
     // Subsequent changes are captured here
     browserHistory.listen((location) => {
-        // put analytics here: (use location.pathname + location.query + location.hash)
         store.dispatch(navigationAction(location));
     })
 

@@ -37,17 +37,17 @@ export default class Menu extends React.Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav pullRight={true}>
-                    {this.props.resultType === 'visualization' && (
+                    {this.props.metadata && this.props.metadata.type === 'Visualization' && (
                         <NavItem {...this.makeLinkProps('/visualization', {'type': 'html'})}>
                             Visualization
                         </NavItem>
                     )}
-                    {this.props.resultType === 'artifact' && (
+                    {this.props.metadata && (
                         <NavItem {...this.makeLinkProps('/peek')}>
                             Peek
                         </NavItem>
                     )}
-                    {this.props.hasProvenance && (
+                    {this.props.provenance && (
                         <NavItem {...this.makeLinkProps('/provenance')}>
                             Provenance
                         </NavItem>
