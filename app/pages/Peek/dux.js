@@ -1,7 +1,14 @@
-import { Dux } from './lib/dx';
+import { Dux, defineAction } from '../../lib/dx';
 
-const dx = new Dux('peek', null)
+export const setMetadata = defineAction(
+    'SET_METADATA', (metadata) => ({ metadata }));
 
-dx.makeReducer({});
+const dx = new Dux('metadata', null)
+
+export const getMetadata = dx.makeSelector(state => state);
+
+dx.makeReducer({
+    [setMetadata]: (state, { metadata }) => metadata
+});
 
 export default dx;

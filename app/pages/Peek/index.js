@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
 
 import component from './component';
-import { getReader } from '../../dux';
 
-const mapStateToProps = (state) => {
-    reader: getReader(state);
-}
+import dx from './dux';
 
-export default connect(mapStateToProps)(component);
+export { dx as peekDux };
+
+export default connect()(component);

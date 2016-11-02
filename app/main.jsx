@@ -15,7 +15,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
-import serviceWorker from 'serviceworker-webpack-plugin/lib/runtime';
 
 import rootReducer from './reducer';
 
@@ -27,7 +26,9 @@ import Provenance from './pages/Provenance';
 import BadURL from './pages/BadURL';
 import IncompatibleBrowser from './pages/IncompatibleBrowser';
 import indexHTML from './index.html.handlebars';
-import { makeRouteProps } from './lib/init';
+import { navigationAction } from './init';
+import { loadSuccess, updateLoadProgress } from './Loader/dux';
+
 
 import '!file?name=/css/bootstrap.min.css!bootstrap/dist/css/bootstrap.min.css';
 import '!file?name=/css/bootstrap.min.css.map!bootstrap/dist/css/bootstrap.min.css.map';
@@ -49,15 +50,14 @@ const makeMiddleware = (history) => applyMiddleware(
     routerMiddleware(history)
 );
 
-import { loadSuccess } from './Loader/dux';
-
 // Live browser context, executed only in a browser
 if (typeof document !== 'undefined') {
-    // window.addEventListener("beforeunload", (event) => {
-    //     const confirmationMessage = "You will lose your current view.";
-    //     event.returnValue = confirmationMessage;
-    //     return confirmationMessage
-    // });
+
+    if (typeof window.Promise === 'undefined') {
+        // so many things aren't going to work, don't even try to do anything
+        window.location = '/incompatible-browser/';
+    }
+
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     const store = createStore(rootReducer,
                               window.__DEHYDRATED_STORE__,
@@ -69,12 +69,17 @@ if (typeof document !== 'undefined') {
             <Router history={history} routes={makeRoutes(store)} />
         </Provider>), document.getElementById('main'));
 
-    store.dispatch(loadSuccess());
-    // serviceWorker.register();
+    // update to reflect assets are downloaded. progress value isn't significant.
+    store.dispatch(updateLoadProgress(0.05));
 
-    // browserHistory.listen((location) => store.dispatch(redirectAction(location)))
-    // const dependencyEngine = new DependencyEngine(store);
-    // store.subscribe(dependencyEngine.handleChange);
+    // Dispatch the navigationAction on first load
+    store.dispatch(navigationAction(history.getCurrentLocation()));
+    // Subsequent changes are captured here
+    browserHistory.listen((location) => {
+        // put analytics here: (use location.pathname + location.query + location.hash)
+        store.dispatch(navigationAction(location));
+    })
+
 }
 
 // Static render context, function called by `static-site-generator-webpack-plugin`
@@ -84,6 +89,11 @@ export default (locals, callback) => {
     history = syncHistoryWithStore(history, store);
     const location = history.createLocation(locals.path);  // the current path
     const routes = makeRoutes(store.dispatch);
+
+    if (locals.path === '/incompatible-browser' || locals.path === '/404.html') {
+        // skip loading bar
+        store.dispatch(loadSuccess());
+    }
 
     match({ routes, location }, (error, redirectLocation, renderProps) => {
         const content = ReactDOMServer.renderToString(

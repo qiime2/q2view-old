@@ -3,14 +3,18 @@ import { routerReducer as routing } from 'react-router-redux';
 
 import { getDuxInRow } from './lib/dx';
 
-import appDux from './dux';
+import { initDux } from './init';
 import { loaderDux } from './Loader';
+import { peekDux } from './pages/Peek';
+import { provenanceDux } from './pages/Provenance';
 
 
 export default combineReducers({
     routing,
     app: getDuxInRow(
-        appDux,
-        loaderDux
+        initDux,
+        loaderDux,
+        peekDux,
+        provenanceDux
     )
 });

@@ -1,7 +1,7 @@
 export const TimeoutAt = (timeout, reason = 'Timed out') => (
     new Promise((resolve, reject) => {
         setTimeout(() => { reject('Timed Out'); }, timeout);
-    });
+    })
 );
 
 export const WaitUntil = (condition) => (

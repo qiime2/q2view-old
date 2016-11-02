@@ -27,7 +27,7 @@ export default class Menu extends React.Component {
 
     render() {
         return (
-            <Navbar style={{'margin-bottom': 0}}>
+            <Navbar style={{marginBottom: 0}}>
                 <Navbar.Header>
                     <Navbar.Brand>
                         {/* Hitting home *should* unload the document */}
@@ -52,9 +52,6 @@ export default class Menu extends React.Component {
                             Provenance
                         </NavItem>
                     )}
-                    <NavItem {...this.makeLinkProps('/provenance')}>
-                        Provenance
-                    </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

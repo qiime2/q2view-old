@@ -32,7 +32,7 @@ module.exports = function extendConfig(override, isDev) {
         plugins: [
             new ServiceWorkerWebpackPlugin({
                 entry: path.join(__dirname, '../app/service-worker.js'),
-                filename: '/js/service-worker.js',
+                filename: '/service-worker.js',
                 excludes: [
                     '**/*.hot-update.js'
                 ]

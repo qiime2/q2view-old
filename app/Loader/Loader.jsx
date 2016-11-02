@@ -9,7 +9,7 @@ export default (props) => {
     }
 
     if (!props.active && !props.success) {
-        return (<FailureCard reason={props.reason} />);
+        return (<FailureCard reason={props.reason} title={props.title} />);
     }
 
     return (<StatusCard message={props.message} progress={props.progress} />);

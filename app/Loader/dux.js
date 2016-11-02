@@ -4,7 +4,7 @@ export const loadSuccess = defineAction(
     'LOAD_SUCCESS');
 
 export const loadFailed = defineAction(
-    'LOAD_FAILED', (reason) => ({ reason }));
+    'LOAD_FAILED', (reason, title='Something went wrong!') => ({ reason, title }));
 
 export const updateLoadMessage = defineAction(
     'UPDATE_LOAD_MESSAGE', (message) => ({ message }));
@@ -23,21 +23,24 @@ export const mapStateToProps = dx.makeSelector(state => state);
 
 dx.makeReducer({
     [updateLoadMessage]: (state, { message }) => ({
-        ...state,
-        message
+        active: true,
+        message,
+        progress: state.progress || 0
     }),
     [updateLoadProgress]: (state, { progress }) => ({
-        ...state,
+        active: true,
+        message: state.message || '',
         progress
     }),
     [loadSuccess]: (state, action) => ({
         active: false,
         success: true
     }),
-    [loadFailed]: (state, { reason }) => ({
+    [loadFailed]: (state, { reason, title }) => ({
         active: false,
         success: false,
-        reason
+        reason,
+        title
     })
 });
 

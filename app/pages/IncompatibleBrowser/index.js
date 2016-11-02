@@ -9,8 +9,8 @@ const downloadChrome = 'https://www.google.com/chrome/browser/';
 const downloadFirefox = 'https://www.mozilla.org/firefox'
 
 export default () => (
-    <Grid style={{'text-align': 'center'}}>
-        <Jumbotron style={{'background-color': 'transparent'}}>
+    <Grid style={{textAlign: 'center'}}>
+        <Jumbotron style={{backgroundColor: 'transparent'}}>
             <h1>Incompatible Browser</h1>
             <p style={{'margin-top': '2em'}}>
                 Sorry, your current browser does not support the latest web-technologies that this site needs.
