@@ -24,6 +24,7 @@
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "bootstrap": "^3.3.7",
+    "cytoscape": "^2.7.10",
     "extract-text-webpack-plugin": "^1.0.1",
     "handlebars": "^4.0.5",
     "handlebars-loader": "^1.4.0",

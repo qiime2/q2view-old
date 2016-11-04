@@ -15,12 +15,16 @@ export const setSource = defineAction(
 export const setReader = defineAction(
     'SET_READER', (reader) => ({ reader }));
 
+export const setProvenance = defineAction(
+    'SET_PROVENANCE', (prov) => ({ prov }));
+
 const dx = new Dux('init', {
     browserCompatible: null,
     sw: null,
     rawSrc: null,
     src: null,
-    reader: null
+    reader: null,
+    prov: null
 })
 
 export const getBrowserCompatible = dx.makeSelector(
@@ -31,6 +35,7 @@ export const getSource = dx.makeSelector(({ src }) => src);
 export const getReader = dx.makeSelector(({ reader }) => reader);
 export const hasSession = dx.makeSelector(
     ({ reader }) => (reader !== null && reader.port !== null));
+export const getProvenance = dx.makeSelector(({ prov }) => prov);
 
 
 dx.makeReducer({
@@ -53,6 +58,10 @@ dx.makeReducer({
     [setReader]: (state, { reader }) => ({
         ...state,
         reader
+    }),
+    [setProvenance]: (state, { prov }) => ({
+        ...state,
+        prov
     })
 });
 

@@ -8,10 +8,9 @@ import loadMetadata from './metadata';
 import loadProvenance from './provenance';
 
 import dx, { getBrowserCompatible, getServiceWorker, getRawSource, setRawSource,
-             getSource, hasSession } from './dux';
+             getSource, hasSession, getProvenance } from './dux';
 import { loadSuccess, loadFailed, updateLoadProgress } from '../Loader/dux';
 import { getMetadata } from '../pages/Peek/dux';
-import { getProvenance } from '../pages/Provenance/dux';
 import redirect from './redirect';
 
 export { dx as initDux }
@@ -105,6 +104,7 @@ export const navigationAction = ({ pathname, query, search }) => (dispatch, getS
                 traverseTodo(i);
             }).catch((error) => {
                 dispatch(loadFailed(error));
+                throw error;
             })
         } else {
             dispatch(loadSuccess());
@@ -114,15 +114,4 @@ export const navigationAction = ({ pathname, query, search }) => (dispatch, getS
     if (todo.length) {
         traverseTodo(0);
     }
-
-
-    //
-    // if ((pathname == '/' || pathname in requireResult)
-    //         && query.src && getSource(state) === null) {
-    //     // dispatch(loadSource(query.src)).then()
-    // }
-
-
-    // dispatch(resolveDependencies());
-
 }

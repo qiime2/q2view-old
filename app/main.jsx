@@ -70,6 +70,7 @@ if (typeof document !== 'undefined') {
     store.dispatch(navigationAction(history.getCurrentLocation()));
     // Subsequent changes are captured here
     browserHistory.listen((location) => {
+        window.ga('send', 'pageview', location.pathname + location.search);
         store.dispatch(navigationAction(location));
     })
 

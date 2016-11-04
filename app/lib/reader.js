@@ -4,6 +4,7 @@ import JSZip from 'jszip';
 
 import { TimeoutAt, readBlobAsText } from './util';
 import extmap from './extmap';
+import schema from './yamlSchema'
 
 
 export default class Reader {
@@ -118,16 +119,21 @@ export default class Reader {
 
     _getFile(relpath) {
         const ext = relpath.split('.').pop();
-        return this.zipReader.file(`${this.uuid}/${relpath}`)
-            .async('uint8array')
-            .then(byteArray => {
-                const x = new Blob([byteArray], { type: extmap[ext] || ''});
-                return x;
-            });
+        const filehandle = this.zipReader.file(`${this.uuid}/${relpath}`);
+        let filepromise = null;
+        if (filehandle === null) {
+            filepromise = () => Promise.reject('No such file.');
+        } else {
+            filepromise = () => filehandle.async('uint8array');
+        }
+        return filepromise().then(byteArray => (
+            new Blob([byteArray], { type: extmap[ext] || ''})
+        ));
     }
 
     _getYAML(relpath) {
-        return this._getFile(relpath).then(readBlobAsText).then(yaml.safeLoad);
+        return this._getFile(relpath).then(readBlobAsText)
+                   .then(text => yaml.safeLoad(text, { schema }));
     }
 
     getURLOfPath(relpath) {
@@ -138,8 +144,55 @@ export default class Reader {
         return this._getYAML('metadata.yaml');
     }
 
-    getProvenanceTree() {
+    _artifactMap(uuid) {
+        return new Promise((resolve, reject) => {
+            this.getProvenanceAction(uuid).then(action => {
+                const artifactsToAction = {};
+                artifactsToAction[uuid] = action.execution.uuid;
+                if (action.action.type === 'method' || action.action.type === 'visualizer') {
+                    let promises = [];
+                    for (let inputMap of action.action.inputs) {
+                        const inputUUID = Object.values(inputMap)[0];
+                        artifactsToAction[inputUUID] = action.execution.uuid;
+                        promises.push(this._artifactMap(inputUUID));
+                    }
+                    Promise.all(promises).then(aList => (
+                        Object.assign(artifactsToAction, ...aList)
+                    )).then(resolve);
+                } else {
+                    resolve(artifactsToAction);
+                }
+            }).catch(() => resolve({ [uuid]: null }));
+        })
+    }
 
+    _inputMap(uuid) {
+        return new Promise((resolve, reject) => {
+            this.getProvenanceAction(uuid).then(action => {
+                const inputs = {};
+                if (action.action.type === 'method' || action.action.type === 'visualizer') {
+                    inputs[action.execution.uuid] = new Set();
+                    let promises = [];
+                    for (let inputMap of action.action.inputs) {
+                        const inputUUID = Object.values(inputMap)[0];
+                        inputs[action.execution.uuid].add(inputMap);
+                        promises.push(this._inputMap(inputUUID));
+                    }
+                    Promise.all(promises).then(iList => (
+                        Object.assign(inputs, ...iList)
+                    )).then(resolve);
+                } else {
+                    resolve(inputs);
+                }
+            }).catch(() => resolve({}));
+        })
+    }
+
+    getProvenanceTree() {
+        return Promise.all([
+            this._artifactMap(this.uuid),
+            this._inputMap(this.uuid)
+        ]);
     }
 
     getProvenanceAction(uuid) {
@@ -150,7 +203,7 @@ export default class Reader {
         }
     }
 
-    getProvenanceNode(uuid) {
+    getProvenanceArtifact(uuid) {
         if (this.uuid === uuid) {
             return this._getYAML('provenance/metadata.yaml');
         } else {
