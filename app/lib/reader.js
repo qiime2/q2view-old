@@ -95,6 +95,12 @@ export default class Reader {
             }
 
             sw.postMessage(message, [channel.port2]);
+            // HACK!! keep-alive heartbeat, number is arbitrary and only "works"
+            // if browsers keep the service worker alive for 250 ms between
+            // requests, which works *today*.
+            window.setInterval(() => {
+                sw.postMessage({'type': 'GARBAGE'}); // ignored in SW
+            }, 250);
         });
 
         return Promise.race([
