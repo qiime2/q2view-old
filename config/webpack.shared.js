@@ -11,7 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = function extendConfig(override, isDev) {
-    var cssLoader = 'css-loader?modules&importLoaders=1' + // eslint-disable-line no-var
+    let cssLoader = 'css-loader?modules&importLoaders=1' +
                     '&localIdentName=[name]--[local]-[hash:base64:5]';
     if (!isDev) {
         cssLoader = ExtractTextPlugin.extract('style-loader', cssLoader);
@@ -21,29 +21,33 @@ module.exports = function extendConfig(override, isDev) {
 
     const defaultConfig = {
         entry: [
-            path.resolve(__dirname, '../app/js/main.js')
+            'babel-polyfill',
+            path.resolve(__dirname, '../app/main.jsx')
         ],
         output: {
             path: path.resolve(__dirname, '../build'),
-            filename: 'js/bundle.js'
+            filename: '/js/bundle-[hash].js',
+            libraryTarget: 'umd'
         },
+        devtool: 'source-map',
         plugins: [
             new ServiceWorkerWebpackPlugin({
-                entry: path.join(__dirname, '../app/js/util/sw.js'),
+                entry: path.join(__dirname, '../app/service-worker.js'),
+                filename: '/service-worker.js',
                 excludes: [
                     '**/*.hot-update.js'
                 ]
             })
         ],
         resolve: {
-            extensions: ['', '.js']
+            extensions: ['', '.js', '.jsx']
         },
         module: {
             loaders: [
                 {
                     test: /\.png$/,
                     // inline files < 5kb
-                    loader: 'url-loader?limit=5000&name=img/[name]-[hash].[ext]'
+                    loader: 'url-loader?limit=5000&name=/img/[name]-[hash:6].[ext]'
                 },
                 {
                     test: /\.jsx?$/,
@@ -57,6 +61,10 @@ module.exports = function extendConfig(override, isDev) {
                 {
                     test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
                     loader: 'url-loader'
+                },
+                {
+                    test: /\.handlebars$/,
+                    loader: 'handlebars'
                 }
             ]
         }

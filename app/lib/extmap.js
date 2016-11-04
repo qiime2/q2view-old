@@ -1,7 +1,7 @@
 // Add any further extensions here:
 
 export default {
-    '123': 'application/vnd.lotus-1-2-3',
+    123: 'application/vnd.lotus-1-2-3',
     '3dml': 'text/vnd.in3d.3dml',
     '3g2': 'video/3gpp2',
     '3gp': 'video/3gpp',
@@ -816,6 +816,7 @@ export default {
     xvml: 'application/xv+xml',
     xwd: 'image/x-xwindowdump',
     xyz: 'chemical/x-xyz',
+    yaml: 'text/x-yaml',
     zaz: 'application/vnd.zzazz.deck+xml',
     zip: 'application/zip',
     zir: 'application/vnd.zul',

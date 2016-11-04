@@ -1,0 +1,56 @@
+{{!--------------------------------------------------------------------------
+   Copyright (c) 2016--, QIIME development team.
+
+   Distributed under the terms of the Modified BSD License.
+
+   The full license is in the file LICENSE, distributed with this software.
+   --------------------------------------------------------------------------}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8" />
+        {{#if favicon}}
+        <link rel='icon' type='image/png' href='{{favicon}}' />
+        {{/if}}
+        <title>View</title>
+        {{!-- imported via `file` loader in `app/main.jsx` --}}
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        {{#if store}}
+        <script>window.__DEHYDRATED_STORE__ = {{{store}}};</script>
+        {{else}}
+        <script>window.__DEHYDRATED_STORE__ = {};</script>
+        {{/if}}
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          window.ga('create', 'UA-86671044-3', 'auto');
+          window.ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <div id="main">
+            {{!-- static render --}}
+            {{#if content}}
+            {{{content}}}
+            {{/if}}
+            <noscript>
+                {{!-- css class applied by ToolbarWindow/Content --}}
+                <style>.js-needed {display:none;}</style>
+                <div style="text-align:center;background-color:transparent;" class="jumbotron">
+                    <h1>JavaScript Required</h1>
+                    <p style="margin-top:2em;">
+                        Sorry, this page requires JavaScript to function.
+                        Please enable it in your browser for this domain name.
+                    </p>
+                </div>
+            </noscript>
+        </div>
+        {{!-- static render --}}
+        {{#if bundle}}
+        <script src="{{bundle}}"></script>
+        {{/if}}
+    </body>
+</html>
