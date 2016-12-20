@@ -21,7 +21,7 @@ requireResult['/visualization/'] = true;
 requireResult['/provenance/'] = true;
 
 
-export const navigationAction = ({ pathname, query, search }) => (dispatch, getState) => {
+export const navigationAction = ({ pathname, query, search, action }) => (dispatch, getState) => {
     if (pathname == '/incompatible-browser/') {
         dispatch(loadSuccess());
         return;
@@ -29,6 +29,17 @@ export const navigationAction = ({ pathname, query, search }) => (dispatch, getS
 
     const state = getState();
     const todo = [];
+
+    if (pathname == '/' && search && action == 'POP' && getRawSource(state)) {
+        window.location.replace('/');
+    }
+
+    if (pathname == '/' && search == '') {
+        todo.push(() => () => new Promise((resolve, reject) => {
+            dispatch({'type': 'RESET_APP'});
+            resolve();
+        }));
+    }
 
     if (!getBrowserCompatible(state)) {
         todo.push(checkBrowserCompatibility);
