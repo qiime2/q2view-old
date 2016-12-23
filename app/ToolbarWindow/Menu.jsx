@@ -31,7 +31,7 @@ export default class Menu extends React.Component {
         return (
             <Navbar style={{marginBottom: 0}}>
                 <Navbar.Header>
-                    <a href='https://qiime2.org'>
+                    <a href='/'>
                         <img style={{height: '40px', marginRight: '10px', marginTop: '4px'}} className='navbar-left' src={logo} alt='QIIME 2'/>
                     </a>
                     <Navbar.Brand>
