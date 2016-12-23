@@ -1,6 +1,6 @@
 {
   "name": "q2view",
-  "version": "0.0.1",
+  "version": "2017.2.0-dev0",
   "description": "View QIIME 2 Artifacts on the web!",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/qiime2/q2view.git"
   },
-  "author": "QIIME 2 Development Team",
+  "author": "QIIME 2 development team",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/qiime2/q2view/issues"
