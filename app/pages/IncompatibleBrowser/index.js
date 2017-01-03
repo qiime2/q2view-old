@@ -10,12 +10,10 @@ const downloadFirefox = 'https://www.mozilla.org/firefox'
 
 export default () => (
     <Grid style={{textAlign: 'center'}}>
-        <Jumbotron style={{backgroundColor: 'transparent'}}>
-            <h1>Incompatible Browser</h1>
-            <p style={{'margin-top': '2em'}}>
-                Sorry, your current browser does not support the latest web-technologies that this site needs.
-            </p>
-        </Jumbotron>
+        <h1>Incompatible Browser</h1>
+        <p style={{'margin-top': '2em'}}>
+            Sorry, your current browser does not support the latest web-technologies that this site needs.
+        </p>
         <Row className="show-grid">
             <Col md={6} mdPush={6} style={{'margin-bottom': '4em'}}>
                 <a href={downloadFirefox}><img src={firefox} /></a>

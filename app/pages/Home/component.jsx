@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Button, Jumbotron, FormGroup, InputGroup, FormControl, Glyphicon } from 'react-bootstrap';
+import { Grid, Row, Col, Button, FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 
 const dropStyle = {
@@ -26,27 +26,32 @@ const onDropStyle = {
 }
 
 export default ({ submitFile, submitURL }) => (
-    <Grid>
-        <Jumbotron style={{backgroundColor: 'transparent', padding: '0px'}}>
-            <h1 style={ {marginBottom: '20px'} }>Get started</h1>
-            <form onSubmit={ submitURL }>
-                <FormGroup>
-                  <InputGroup bsSize='large'>
-                    <FormControl type="text" placeholder="Enter a public URL to your QIIME 2 Artifact or Visualization (.qza/.qzv)"/>
-                    <InputGroup.Button>
-                      <Button type='submit' bsStyle='primary'>Go!</Button>
-                    </InputGroup.Button>
-                  </InputGroup>
-                </FormGroup>
-            </form>
-            <p style={ {textAlign: 'center'} }>- or -</p>
-            <Dropzone style={ dropStyle } activeStyle={ onDropStyle } disablePreview={true} multiple={false}
-                      accept=".qza,.qzv" onDrop={ submitFile }>
-                <p style={ {fontSize: '18px', padding: '10px'} }>
-                    Drag and drop (or click) to view a local QIIME 2 Artifact
-                    or Visualization (.qza/.qzv)
-                </p>
-            </Dropzone>
-        </Jumbotron>
+    <Grid style={ {marginTop: '20px'} }>
+        <Row>
+            <Col md={12}>
+                <form onSubmit={ submitURL }>
+                    <FormGroup>
+                        <InputGroup bsSize='large'>
+                            <FormControl type="text" placeholder="Enter a public URL to your QIIME 2 Artifact or Visualization (.qza/.qzv)"/>
+                            <InputGroup.Button>
+                                <Button type='submit' bsStyle='primary'>Go!</Button>
+                            </InputGroup.Button>
+                        </InputGroup>
+                    </FormGroup>
+                </form>
+            </Col>
+        </Row>
+        <Row><Col md={12} style={ { textAlign: 'center' } }>- or -</Col></Row>
+        <Row>
+            <Col md={12}>
+                <Dropzone style={ dropStyle } activeStyle={ onDropStyle } disablePreview={true} multiple={false}
+                          accept=".qza,.qzv" onDrop={ submitFile }>
+                    <p style={ {fontSize: '18px', padding: '10px'} }>
+                        Drag and drop (or click) to view a local QIIME 2 Artifact
+                        or Visualization (.qza/.qzv)
+                    </p>
+                </Dropzone>
+            </Col>
+        </Row>
     </Grid>
 );

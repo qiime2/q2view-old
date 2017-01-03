@@ -4,7 +4,7 @@ import { NavItem, Navbar, Nav, NavDropdown, MenuItem} from 'react-bootstrap';
 
 import queryString from 'query-string';
 
-import logo from './img/qiime2-square-40.png';
+import logo from './img/qiime2-rect-100.png';
 
 
 export default class Menu extends React.Component {
@@ -29,33 +29,37 @@ export default class Menu extends React.Component {
 
     render() {
         return (
-            <Navbar style={{marginBottom: 0}}>
+            <Navbar>
                 <Navbar.Header>
                     <a href='/'>
                         <img style={{height: '40px', marginRight: '10px', marginTop: '4px'}} className='navbar-left' src={logo} alt='QIIME 2'/>
                     </a>
-                    <Navbar.Brand>
-                        {/* Hitting home *should* unload the document */}
-                        <a href='/'>
-                            q2view
-                        </a>
-                    </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav pullRight={true}>
+                        <Navbar.Brand>
+                            {/* Hitting home *should* unload the document */}
+                            <a href='/'>
+                                https://view.qiime2.org/
+                            </a>
+                        </Navbar.Brand>
+
                     {this.props.hasVisualization && (
-                        <NavItem {...this.makeLinkProps('/visualization', {'type': 'html'})}>
+                        <NavItem {...this.makeLinkProps('/visualization', {'type': 'html'})}
+                         className={(this.props.location.pathname === '/visualization/') ? 'active': ''}>
                             Visualization
                         </NavItem>
                     )}
                     {this.props.hasMetadata && (
-                        <NavItem {...this.makeLinkProps('/peek')}>
+                        <NavItem {...this.makeLinkProps('/peek')}
+                         className={(this.props.location.pathname === '/peek/') ? 'active': ''}>
                             Peek
                         </NavItem>
                     )}
                     {this.props.hasProvenance && (
-                        <NavItem {...this.makeLinkProps('/provenance')}>
+                        <NavItem {...this.makeLinkProps('/provenance')}
+                         className={(this.props.location.pathname === '/provenance/') ? 'active': ''}>
                             Provenance
                         </NavItem>
                     )}

@@ -5,8 +5,8 @@ import Loader from '../Loader';
 const frameWrapper = {
     position: 'fixed',
     width: '100%',
-    // "Temporary" hack
-    height: 'calc(100% - 52px)',
+    height: '100%',
+    marginTop: '-20px',
     overflow: 'auto'
 };
 
