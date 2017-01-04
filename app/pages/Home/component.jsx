@@ -41,7 +41,7 @@ export default ({ submitFile, submitURL }) => (
                 </form>
             </Col>
         </Row>
-        <Row><Col md={12} style={ { textAlign: 'center' } }>- or -</Col></Row>
+        <h3 style={ { textAlign: 'center', marginBottom: '30px' } }>- or -</h3>
         <Row>
             <Col md={12}>
                 <Dropzone style={ dropStyle } activeStyle={ onDropStyle } disablePreview={true} multiple={false}
