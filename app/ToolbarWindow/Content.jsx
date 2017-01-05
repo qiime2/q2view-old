@@ -5,9 +5,9 @@ import Loader from '../Loader';
 const frameWrapper = {
     position: 'fixed',
     width: '100%',
-    // "Temporary" hack
-    height: 'calc(100% - 52px)',
-    overflow: 'auto'
+    marginTop: '-20px',
+    height: 'calc(100% - 50px)',  // "Temporary" hack, BS navbar is 50px tall
+    overflow: 'auto',
 };
 
 export default ({ children }) => (
