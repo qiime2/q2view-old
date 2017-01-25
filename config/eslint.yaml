@@ -21,6 +21,6 @@ rules:
     # PEP8 uses 4 spaces, it's just easier this way.
     indent: [error, 4]
     no-nested-ternary: off
-
+    no-underscore-dangle: off
 env:
     browser: true

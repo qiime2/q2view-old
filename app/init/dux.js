@@ -1,22 +1,22 @@
 import { Dux, defineAction } from '../lib/dx';
 
 export const setServiceWorker = defineAction(
-    'SET_SERVICE_WORKER', (sw) => ({ sw }));
+    'SET_SERVICE_WORKER', sw => ({ sw }));
 
 export const setBrowserCompatible = defineAction(
-    'SET_BROWSER_COMPATIBLE', (browserCompatible) => ({ browserCompatible }));
+    'SET_BROWSER_COMPATIBLE', browserCompatible => ({ browserCompatible }));
 
 export const setRawSource = defineAction(
-    'SET_RAW_SOURCE', (rawSrc) => ({ rawSrc }));
+    'SET_RAW_SOURCE', rawSrc => ({ rawSrc }));
 
 export const setSource = defineAction(
-    'SET_SOURCE', (src) => ({ src }));
+    'SET_SOURCE', src => ({ src }));
 
 export const setReader = defineAction(
-    'SET_READER', (reader) => ({ reader }));
+    'SET_READER', reader => ({ reader }));
 
 export const setProvenance = defineAction(
-    'SET_PROVENANCE', (prov) => ({ prov }));
+    'SET_PROVENANCE', prov => ({ prov }));
 
 const dx = new Dux('init', {
     browserCompatible: null,
@@ -25,7 +25,7 @@ const dx = new Dux('init', {
     src: null,
     reader: null,
     prov: null
-})
+});
 
 export const getBrowserCompatible = dx.makeSelector(
     ({ browserCompatible }) => browserCompatible);

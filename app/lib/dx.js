@@ -1,26 +1,25 @@
 import { combineReducers } from 'redux';
-import _ from 'lodash';
 
 
 export const getDuxInRow = (...duxi) => {
     const reducers = {};
-    for (let dux of duxi) {
+    for (const dux of duxi) {
         if (dux.reducer !== null) {
             reducers[dux.root] = dux.reducer;
         } else {
-            throw Error("A Dux is missing a reducer");
+            throw Error('A Dux is missing a reducer');
         }
     }
 
     return combineReducers(reducers);
-}
+};
 
-export const defineAction = (type, factory = ()=>({})) => {
+export const defineAction = (type, factory = () => ({})) => {
     const actionFactory = (...args) => ({ ...factory(...args), type });
     actionFactory.type = type;
     actionFactory.toString = () => type;
     return actionFactory;
-}
+};
 
 export class Dux {
     constructor(root, initialState) {
@@ -48,6 +47,6 @@ export class Dux {
             // than one node?
             const partialState = state.app[this.root];
             return partialSelector(partialState, ownProps);
-        }
+        };
     }
 }

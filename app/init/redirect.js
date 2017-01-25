@@ -3,7 +3,7 @@ import { updateLoadMessage } from '../Loader/dux';
 import { getMetadata } from '../pages/Peek/dux';
 import { getSource } from './dux';
 
-const redirect = (path) => (dispatch) => {
+const redirect = path => (dispatch) => {
     // Prevent infinite recursion
     window.setTimeout(() => dispatch(push(path)), 0);
 };
@@ -21,6 +21,6 @@ export const redirectToDefault = () => (dispatch, getState) => {
     }
 
     return Promise.resolve();
-}
+};
 
 export default redirect;
