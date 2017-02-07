@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
-import { NavItem, Navbar, Nav, NavDropdown, MenuItem} from 'react-bootstrap';
+import { NavItem, Navbar, Nav } from 'react-bootstrap';
 
 import queryString from 'query-string';
 
@@ -8,7 +7,7 @@ import logo from './img/q2view.png';
 
 
 export default class Menu extends React.Component {
-    makeLinkProps(path, queryParams={}) {
+    makeLinkProps(path, queryParams = {}) {
         const { src } = this.props.location.query;
         let newQueryString = queryString.stringify({
             src,
@@ -24,7 +23,7 @@ export default class Menu extends React.Component {
                 e.preventDefault();
             },
             href: newPath
-        }
+        };
     }
 
     render() {
@@ -33,32 +32,42 @@ export default class Menu extends React.Component {
                 <Navbar.Header>
                     <Navbar.Brand>
                         {/* Hitting home *should* unload the document */}
-                        <a href='/'>
-                            <img style={{height: '40px', marginTop: '-10px'}} src={ logo } alt='QIIME 2'/>
+                        <a href="/">
+                            <img
+                                style={{ height: '40px', marginTop: '-10px' }}
+                                src={logo}
+                                alt="QIIME 2"
+                            />
                         </a>
                     </Navbar.Brand>
-                    {(this.props.hasVisualization || this.props.hasMetadata || this.props.hasProvenance) && (
+                    {(this.props.hasVisualization || this.props.hasMetadata || this.props.hasProvenance) && ( // eslint-disable-line max-len
                     <Navbar.Toggle />
                     )}
                 </Navbar.Header>
-                {(this.props.hasVisualization || this.props.hasMetadata || this.props.hasProvenance) && (
+                {(this.props.hasVisualization || this.props.hasMetadata || this.props.hasProvenance) && ( // eslint-disable-line max-len
                 <Navbar.Collapse>
-                    <Nav pullRight={true}>
-                    {this.props.hasVisualization && (
-                        <NavItem {...this.makeLinkProps('/visualization', {'type': 'html'})}
-                         className={(this.props.location.pathname === '/visualization/') ? 'active': ''}>
+                    <Nav pullRight>
+                        {this.props.hasVisualization && (
+                        <NavItem
+                            {...this.makeLinkProps('/visualization', { type: 'html' })}
+                            className={(this.props.location.pathname === '/visualization/') ? 'active' : ''}
+                        >
                             Visualization
                         </NavItem>
                     )}
-                    {this.props.hasMetadata && (
-                        <NavItem {...this.makeLinkProps('/peek')}
-                         className={(this.props.location.pathname === '/peek/') ? 'active': ''}>
+                        {this.props.hasMetadata && (
+                        <NavItem
+                            {...this.makeLinkProps('/peek')}
+                            className={(this.props.location.pathname === '/peek/') ? 'active' : ''}
+                        >
                             Peek
                         </NavItem>
                     )}
-                    {this.props.hasProvenance && (
-                        <NavItem {...this.makeLinkProps('/provenance')}
-                         className={(this.props.location.pathname === '/provenance/') ? 'active': ''}>
+                        {this.props.hasProvenance && (
+                        <NavItem
+                            {...this.makeLinkProps('/provenance')}
+                            className={(this.props.location.pathname === '/provenance/') ? 'active' : ''}
+                        >
                             Provenance
                         </NavItem>
                     )}

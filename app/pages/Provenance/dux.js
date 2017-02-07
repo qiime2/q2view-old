@@ -3,7 +3,19 @@ import { getReader } from '../../init/dux';
 
 
 const _setSelection = defineAction(
-    'SET_PROVENANCE_SELECTION', (selection) => ({ selection }));
+    'SET_PROVENANCE_SELECTION', selection => ({ selection }));
+
+export const setViewTitle = defineAction(
+    'SET_PROVENANCE_VIEW_TITLE', viewTitle => ({ viewTitle }));
+
+export const setElements = defineAction(
+    'SET_PROVENANCE_ELEMENTS', elements => ({ elements }));
+
+export const setHeight = defineAction(
+    'SET_PROVENANCE_HEIGHT', height => ({ height }));
+
+export const clearSelection = defineAction(
+    'CLEAR_PROVENANCE_SELECTION');
 
 export const setSelection = ({ type, uuid }) => (dispatch, getState) => {
     const reader = getReader(getState());
@@ -20,25 +32,13 @@ export const setSelection = ({ type, uuid }) => (dispatch, getState) => {
                  .catch(() => dispatch(_setSelection(undefined)));
 };
 
-export const setViewTitle = defineAction(
-    'SET_PROVENANCE_VIEW_TITLE', (viewTitle) => ({ viewTitle }));
-
-export const setElements = defineAction(
-    'SET_PROVENANCE_ELEMENTS', (elements) => ({ elements }));
-
-export const setHeight = defineAction(
-    'SET_PROVENANCE_HEIGHT', (height) => ({ height }));
-
-export const clearSelection = defineAction(
-    'CLEAR_PROVENANCE_SELECTION');
-
 const dx = new Dux('provenance', {
     selection: null,
     viewTitle: 'Details',
     elements: null,
     exists: false,
     height: 0
-})
+});
 
 export const getElements = dx.makeSelector(({ elements }) => elements);
 export const getViewTitle = dx.makeSelector(({ viewTitle }) => viewTitle);
@@ -63,7 +63,7 @@ dx.makeReducer({
         height,
         exists: true
     }),
-    [clearSelection]: (state) => ({
+    [clearSelection]: state => ({
         ...state,
         viewTitle: 'Details',
         selection: null,

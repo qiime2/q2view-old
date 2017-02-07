@@ -5,7 +5,7 @@ import Content from './Content';
 
 export default ({ children, location }) => (
     <div>
-        <MenuContainer location={location}/>
+        <MenuContainer location={location} />
         <Content>{children}</Content>
     </div>
 );

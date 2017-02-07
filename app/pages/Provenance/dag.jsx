@@ -11,7 +11,7 @@ const cytoscapeConfig = {
         fit: false,
         condense: true,
         avoidOverlapPadding: 75,
-        position: (node) => ({
+        position: node => ({
             row: node.data('row'),
             col: node.data('col')
         })
@@ -39,12 +39,12 @@ const cytoscapeConfig = {
         {
             selector: 'edge',
             css: {
-                'content': 'data(param)',
+                content: 'data(param)',
                 'target-arrow-shape': 'triangle',
                 'curve-style': 'segments'
             }
         },
-            {
+        {
             selector: ':selected',
             css: {
                 'background-color': 'rgb(81, 132, 151)',
@@ -62,7 +62,7 @@ export default class DAGView extends React.Component {
         this.selectedExists = false;
         this.cy = cytoscape({
             ...cytoscapeConfig,
-            container: this.refs.cytoscapeRoot,
+            container: this.cytoscapeRoot,
             elements: this.props.elements
         });
 
@@ -74,14 +74,14 @@ export default class DAGView extends React.Component {
 
                 let node = elem;
                 if (elem.isEdge()) {
-                node = elem.source();
+                    node = elem.source();
                 }
 
                 if (node.isParent()) {
                     this.props.setSelection({
                         type: 'action',
                         uuid: node.children()[0].data('id')
-                    })
+                    });
                 } else {
                     this.props.setSelection({
                         type: 'artifact',
@@ -98,7 +98,7 @@ export default class DAGView extends React.Component {
             }
         });
 
-        this.cy.on('unselect', 'node, edge', (event) => {
+        this.cy.on('unselect', 'node, edge', (event) => {  // eslint-disable-line no-unused-vars
             this.cy.elements('node, edge').unselect();
             if (!this.lock && this.selectedExists) {
                 this.selectedExists = false;
@@ -107,13 +107,6 @@ export default class DAGView extends React.Component {
         });
 
         this.cy.center();
-    }
-
-    componentWillUnmount() {
-        this.cy.destroy();
-        this.cy = null;
-        this.lock = false;
-        this.selectedExists = false;
     }
 
     componentWillReceiveProps({ elements }) {
@@ -125,9 +118,17 @@ export default class DAGView extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this.cy.destroy();
+        this.cy = null;
+        this.lock = false;
+        this.selectedExists = false;
+    }
+
     render() {
-        return (<div ref="cytoscapeRoot"
-                     style={{height: ((this.props.height + 1) * 105) + 'px'}}>
-                </div>);
+        return (<div
+            ref={(c) => { this.cytoscapeRoot = c; }}
+            style={{ height: `${(this.props.height + 1) * 105}px` }}
+        />);
     }
 }

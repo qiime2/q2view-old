@@ -29,12 +29,13 @@ import indexHTML from './index.html.handlebars';
 import { navigationAction } from './init';
 import { loadSuccess, updateLoadProgress } from './Loader/dux';
 
-
+/* eslint-disable */
 import '!file?name=/css/bootstrap.min.css!bootstrap/dist/css/bootstrap.min.css';
 import '!file?name=/css/bootstrap.min.css.map!bootstrap/dist/css/bootstrap.min.css.map';
 import favicon from '!file?name=/img/favicon-[hash:6].ico!./favicon.ico';
+/* eslint-enable */
 
-const makeRoutes = (store) => (
+const makeRoutes = store => ( // eslint-disable-line no-unused-vars
     <Route path="/" component={ToolbarWindow} >
         <IndexRoute component={Home} />
         <Route path="visualization" component={Visualization} />
@@ -45,7 +46,7 @@ const makeRoutes = (store) => (
     </Route>
 );
 
-const makeMiddleware = (history) => applyMiddleware(
+const makeMiddleware = history => applyMiddleware(
     thunk,
     routerMiddleware(history)
 );
@@ -72,8 +73,7 @@ if (typeof document !== 'undefined') {
     browserHistory.listen((location) => {
         window.ga('send', 'pageview', location.pathname + location.search);
         store.dispatch(navigationAction(location));
-    })
-
+    });
 }
 
 // Static render context, function called by `static-site-generator-webpack-plugin`
@@ -102,4 +102,4 @@ export default (locals, callback) => {
             content
         }));
     });
-}
+};

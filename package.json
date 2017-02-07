@@ -4,9 +4,7 @@
   "description": "View QIIME 2 Artifacts on the web!",
   "main": "index.js",
   "scripts": {
-    "lint:css": "stylelint 'app/**/*.css' --config config/stylelint.yaml",
-    "lint:js": "eslint app/ config/ --config config/eslint.yaml",
-    "lint": "npm run lint:js && npm run lint:css",
+    "lint": "eslint app/ config/ --ext .js,.jsx --config config/eslint.yaml",
     "test": "npm run lint",
     "start": "webpack-dev-server --config config/webpack.dev.config.js --host localhost --port 4242 --inline --hot",
     "build": "webpack --config config/webpack.prod.config.js"
