@@ -7,14 +7,14 @@ import SelectionView from './selectionContainer';
 
 
 const Pane = ({ children }) => (
-    <div style={{ height: '100%', overflow: 'auto', position: 'relative'}}>
+    <div style={{ height: '100%', overflow: 'auto', position: 'relative' }}>
         { children }
     </div>
-)
+);
 
 export default ({ viewTitle }) => (
     <Grid>
-        <Row style={{ marginTop: '30px'}}>
+        <Row style={{ marginTop: '30px' }}>
             <Col md={7}>
                 <Panel header={(<h3>Provenance Graph</h3>)}>
                     <Pane><DAGView /></Pane>

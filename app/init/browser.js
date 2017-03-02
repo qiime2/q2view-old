@@ -2,13 +2,12 @@ import { updateLoadMessage } from '../Loader/dux';
 import { setBrowserCompatible } from './dux';
 
 
-
-export default () => (dispatch) => new Promise((resolve, reject) => {
+export default () => dispatch => new Promise((resolve, reject) => {
     const redirectToIncompatibleBrowser = () => {
         // unloads document entirely, all scripts will stop executing
         window.location = '/incompatible-browser/';
         reject('redirecting...');
-    }
+    };
 
     dispatch(updateLoadMessage('checking browser compatibility'));
 

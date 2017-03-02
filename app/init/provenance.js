@@ -15,7 +15,8 @@ export default () => (dispatch, getState) => {
             if (artifacts[uuid] === null || typeof actions[artifacts[uuid]] === 'undefined') {
                 return 0;
             }
-            return 1 + Math.max(...Array.from(actions[artifacts[uuid]]).map((mapping) => findMaxDepth(Object.values(mapping)[0])));
+            return 1 + Math.max(...Array.from(actions[artifacts[uuid]]).map(mapping =>
+              findMaxDepth(Object.values(mapping)[0])));
         };
 
 
@@ -24,8 +25,8 @@ export default () => (dispatch, getState) => {
         const actionNodes = [];
         const edges = [];
 
-        for (let actionUUID of Object.keys(actions)) {
-            for (let mapping of actions[actionUUID]) {
+        for (const actionUUID of Object.keys(actions)) {
+            for (const mapping of actions[actionUUID]) {
                 edges.push({
                     data: {
                         id: `${Object.values(mapping)[0]}to${actionUUID}`,
@@ -37,7 +38,7 @@ export default () => (dispatch, getState) => {
             }
         }
 
-        for (let actionUUID of Object.values(artifacts)) {
+        for (const actionUUID of Object.values(artifacts)) {
             // These don't need to be sorted.
             if (actionUUID !== null) {
                 actionNodes.push({
@@ -46,7 +47,7 @@ export default () => (dispatch, getState) => {
             }
         }
 
-        for (let artifactUUID of Object.keys(artifacts)) {
+        for (const artifactUUID of Object.keys(artifacts)) {
             nodes.push({
                 data: {
                     id: artifactUUID,
@@ -56,19 +57,18 @@ export default () => (dispatch, getState) => {
             });
         }
 
-        for (let i=0; i < height; i++) {
-            let currNodes = nodes.filter((v) => v.data.row === i);
-            let sorted = currNodes.sort((a, b) => {
+        for (let i = 0; i < height; i += 1) {
+            const currNodes = nodes.filter(v => v.data.row === i);
+            const sorted = currNodes.sort((a, b) => {
                 if (a.data.parent < b.data.parent) {
-                    return -1
+                    return -1;
                 } else if (a.data.parent > b.data.parent) {
-                    return 1
-                } else {
-                    return 0
+                    return 1;
                 }
+                return 0;
             });
 
-            for (let n of currNodes) {
+            for (const n of currNodes) {
                 n.data.col = sorted.indexOf(n);
             }
         }
@@ -80,5 +80,5 @@ export default () => (dispatch, getState) => {
             nodes,
             edges
         }));
-    })
-}
+    });
+};

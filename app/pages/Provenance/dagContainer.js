@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import DAGView from './dag';
 import { getElements, getHeight, setSelection, clearSelection } from './dux';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     elements: getElements(state),
     height: getHeight(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    setSelection: (selection) => dispatch(setSelection(selection)),
+const mapDispatchToProps = dispatch => ({
+    setSelection: selection => dispatch(setSelection(selection)),
     clearSelection: () => dispatch(clearSelection())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DAGView)
+export default connect(mapStateToProps, mapDispatchToProps)(DAGView);

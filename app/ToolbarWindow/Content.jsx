@@ -7,7 +7,7 @@ const frameWrapper = {
     width: '100%',
     marginTop: '-20px',
     height: 'calc(100% - 50px)',  // "Temporary" hack, BS navbar is 50px tall
-    overflow: 'auto',
+    overflow: 'auto'
 };
 
 export default ({ children }) => (

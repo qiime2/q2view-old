@@ -12,12 +12,12 @@ const mapStateToProps = (state) => {
     return {
         hasVisualization: metadata && metadata.type === 'Visualization',
         hasMetadata: !!metadata,
-        hasProvenance: hasProvenance(state),
+        hasProvenance: hasProvenance(state)
     };
-}
+};
 
-const mapDispatchToProps = (dispatch) => ({
-    push: (path) => dispatch(push(path))
+const mapDispatchToProps = dispatch => ({
+    push: path => dispatch(push(path))
 });
 
 

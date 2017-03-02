@@ -4,8 +4,8 @@ import { getSelection } from './dux';
 
 import SelectionView from './selection';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     selection: getSelection(state)
-})
+});
 
 export default connect(mapStateToProps)(SelectionView);

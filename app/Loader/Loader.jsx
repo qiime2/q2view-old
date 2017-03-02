@@ -13,4 +13,4 @@ export default (props) => {
     }
 
     return (<StatusCard message={props.message} progress={props.progress} />);
-}
+};

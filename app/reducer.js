@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
 import { getDuxInRow } from './lib/dx';
@@ -18,11 +17,11 @@ const appReducer = getDuxInRow(
 
 export default (state = {}, action) => {
     let appState = state.app;
-    if (action.type == 'RESET_APP') {
+    if (action.type === 'RESET_APP') {
         appState = undefined;
     }
     return {
         routing: routerReducer(state.routing, action),
         app: appReducer(appState, action)
-    }
-}
+    };
+};

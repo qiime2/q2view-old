@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import component from './component';
 import { setRawSource } from '../../init/dux';
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     submitURL: (event) => {
         event.preventDefault();
         const textInput = event.target[0];
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
             }));
             dispatch(push('/?src=local'));
         } else {
-            alert('Not a .qza/.qzv file.')
+            alert('Not a .qza/.qzv file.');
         }
     }
 });

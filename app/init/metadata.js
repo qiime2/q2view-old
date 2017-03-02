@@ -6,7 +6,7 @@ export default () => (dispatch, getState) => {
     const reader = getReader(getState());
     dispatch(updateLoadMessage('loading metadata'));
 
-    return reader.getMetadata().then(metadata => {
+    return reader.getMetadata().then((metadata) => {
         dispatch(setMetadata(metadata));
     });
 };

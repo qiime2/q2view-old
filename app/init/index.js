@@ -11,9 +11,9 @@ import dx, { getBrowserCompatible, getServiceWorker, getRawSource, setRawSource,
              getSource, hasSession, getProvenance } from './dux';
 import { loadSuccess, loadFailed, updateLoadProgress } from '../Loader/dux';
 import { getMetadata } from '../pages/Peek/dux';
-import redirect from './redirect';
 
-export { dx as initDux }
+
+export { dx as initDux };
 
 const requireResult = Object.create(null);
 requireResult['/peek/'] = true;
@@ -22,7 +22,7 @@ requireResult['/provenance/'] = true;
 
 
 export const navigationAction = ({ pathname, query, search, action }) => (dispatch, getState) => {
-    if (pathname == '/incompatible-browser/') {
+    if (pathname === '/incompatible-browser/') {
         dispatch(loadSuccess());
         return;
     }
@@ -30,13 +30,13 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
     const state = getState();
     const todo = [];
 
-    if (pathname == '/' && search && action == 'POP' && getRawSource(state)) {
+    if (pathname === '/' && search && action === 'POP' && getRawSource(state)) {
         window.location.replace('/');
     }
 
-    if (pathname == '/' && search == '') {
-        todo.push(() => () => new Promise((resolve, reject) => {
-            dispatch({'type': 'RESET_APP'});
+    if (pathname === '/' && search === '') {
+        todo.push(() => () => new Promise((resolve) => {
+            dispatch({ type: 'RESET_APP' });
             resolve();
         }));
     }
@@ -50,18 +50,18 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
     }
 
     if (query.src) {
-        let isLocal = (query.src === 'local' ||
+        const isLocal = (query.src === 'local' ||
             /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(query.src));
 
         if (isLocal) {
             if (!getRawSource(state)) {
                 // No backing data, explain and early return
-                    dispatch(loadFailed(
-                        `This was a temporary page and is not shareable. To share
-                        QIIME 2 Artifacts and Visualizations, please upload
-                        your file to a file hosting service and provide the
-                        resulting URL to the home screen of this application.`,
-                        'Expired Page'));
+                dispatch(loadFailed(
+                    `This was a temporary page and is not shareable. To share
+                    QIIME 2 Artifacts and Visualizations, please upload
+                    your file to a file hosting service and provide the
+                    resulting URL to the home screen of this application.`,
+                    'Expired Page'));
                 return;
             }
 
@@ -69,10 +69,10 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
                 todo.push(resolveFile);
 
                 // first time load, prevent accidental navigation away
-                window.addEventListener("beforeunload", (event) => {
-                    const confirmationMessage = "You will lose your current view.";
-                    event.returnValue = confirmationMessage;
-                    return confirmationMessage
+                window.addEventListener('beforeunload', (event) => {
+                    const confirmationMessage = 'You will lose your current view.';
+                    event.returnValue = confirmationMessage;  // eslint-disable-line no-param-reassign, max-len
+                    return confirmationMessage;
                 });
             }
         } else {
@@ -102,7 +102,7 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
             todo.push(loadProvenance);
         }
 
-        if (pathname == '/') {
+        if (pathname === '/') {
             todo.push(redirectToDefault);
         }
     }
@@ -110,19 +110,19 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
     const traverseTodo = (i) => {
         if (i < todo.length) {
             dispatch(todo[i]()).then(() => {
-                i++;
+                i += 1;  // eslint-disable-line no-param-reassign
                 dispatch(updateLoadProgress(i / todo.length));
                 traverseTodo(i);
             }).catch((error) => {
                 dispatch(loadFailed(error));
                 throw error;
-            })
+            });
         } else {
             dispatch(loadSuccess());
         }
-    }
+    };
 
     if (todo.length) {
         traverseTodo(0);
     }
-}
+};
