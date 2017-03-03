@@ -1,8 +1,7 @@
-import _ from 'lodash';
 import yaml from 'js-yaml';
 import JSZip from 'jszip';
 
-import { timeoutAt, readBlobAsText } from './util';
+import { readBlobAsText } from './util';
 import extmap from './extmap';
 import schema from './yamlSchema';
 
@@ -71,56 +70,23 @@ export default class Reader {
         this.port = null;
     }
 
-    attachToServiceWorker(sw) {
-        const makeConnection = () => new Promise((resolve, reject) => {
-            if (this.port !== null) {
-                reject('Duplicate attachment error');
+    attachToServiceWorker() {
+        window.navigator.serviceWorker.onmessage = (event) => {
+            if (event.data.session !== this.session) {
+                return; // This message is meant for another tab.
             }
-
-            const channel = new MessageChannel();
-            const message = {
-                type: 'NEW_DOCUMENT',
-                session: this.session
-            };
-
-            channel.port1.onmessage = (event) => {
-                // super simple "echo" handshake
-                if (_.isEqual(event.data, message)) {
-                    channel.port1.onmessage = this._handleDataRequest.bind(this);
-                    this.port = channel.port1;
-                    resolve(this.port);
-                } else {
-                    reject(`Protocol Error: failure to mirror document session ${event.data}`);
-                }
-            };
-
-            sw.postMessage(message, [channel.port2]);
-            // HACK!! keep-alive heartbeat, number is arbitrary and only "works"
-            // if browsers keep the service worker alive for 250 ms between
-            // requests, which works *today*.
-            window.setInterval(() => {
-                sw.postMessage({ type: 'GARBAGE' }); // ignored in SW
-            }, 250);
-        });
-
-        return Promise.race([
-            timeoutAt(3000, "Couldn't connect to service worker."),
-            makeConnection()
-        ]);
-    }
-
-    _handleDataRequest(event) {
-        switch (event.data.type) {
-        case 'GET_BLOB':
-            this._getFile(event.data.filename).then((blob) => {
-                // the request should provide a port for later response
-                event.ports[0].postMessage(blob);
-            }).catch(error => console.error(error));  // eslint-disable-line no-console
-            break;
-        default:
-            console.log(`Unknown SW event type: ${event.data.type}`);  // eslint-disable-line no-console
-            break;
-        }
+            switch (event.data.type) {
+            case 'GET_BLOB':
+                this._getFile(event.data.filename).then((blob) => {
+                    // the request should provide a port for later response
+                    event.ports[0].postMessage(blob);
+                }).catch(error => console.error(error));  // eslint-disable-line no-console
+                break;
+            default:
+                console.log(`Unknown SW event type: ${event.data.type}`);  // eslint-disable-line no-console
+                break;
+            }
+        };
     }
 
     _getFile(relpath) {
