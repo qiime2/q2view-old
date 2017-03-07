@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 
 import component from './component';
 import { setRawSource } from '../../init/dux';
+import { parseFileNameFromURL } from '../../lib/util';
 
 const mapDispatchToProps = dispatch => ({
     submitURL: (event) => {
@@ -12,7 +13,8 @@ const mapDispatchToProps = dispatch => ({
         textInput.value = '';
         dispatch(setRawSource({
             from: 'remote',
-            data: url
+            data: url,
+            name: parseFileNameFromURL(url)
         }));
         const encodedURL = encodeURIComponent(url);
         const newRoute = `/?src=${encodedURL}`;
@@ -23,7 +25,8 @@ const mapDispatchToProps = dispatch => ({
         if (file) {
             dispatch(setRawSource({
                 from: 'local',
-                data: file
+                data: file,
+                name: file.name
             }));
             dispatch(push('/?src=local'));
         } else {

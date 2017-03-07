@@ -6,9 +6,10 @@ import { redirectToDefault } from './redirect';
 import initSession from './session';
 import loadMetadata from './metadata';
 import loadProvenance from './provenance';
+import { parseFileNameFromURL } from '../lib/util';
 
 import dx, { getBrowserCompatible, getServiceWorker, getRawSource, setRawSource,
-             getSource, hasSession, getProvenance } from './dux';
+             getSource, hasSession, getProvenance, getFileName } from './dux';
 import { loadSuccess, loadFailed, updateLoadProgress } from '../Loader/dux';
 import { getMetadata } from '../pages/Peek/dux';
 
@@ -57,10 +58,10 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
             if (!getRawSource(state)) {
                 // No backing data, explain and early return
                 dispatch(loadFailed(
-                    `This was a temporary page and is not shareable. To share
-                    QIIME 2 Artifacts and Visualizations, please upload
+                    new Error(`This was a temporary page and is not shareable.
+                    To share QIIME 2 Artifacts and Visualizations, please upload
                     your file to a file hosting service and provide the
-                    resulting URL to the home screen of this application.`,
+                    resulting URL to the home screen of this application.`),
                     'Expired Page'));
                 return;
             }
@@ -79,9 +80,11 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
             // URL source
             if (!getRawSource(state)) {
                 // easily handled right away
+                const urlString = decodeURIComponent(query.src);
                 dispatch(setRawSource({
                     from: 'remote',
-                    data: decodeURIComponent(query.src)
+                    data: urlString,
+                    name: parseFileNameFromURL(urlString)
                 }));
             }
 
@@ -119,6 +122,10 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
             });
         } else {
             dispatch(loadSuccess());
+            const fileName = getFileName(getState());
+            if (fileName !== null) {
+                document.title = `${fileName} | QIIME 2 View`;
+            }
         }
     };
 
