@@ -36,6 +36,12 @@ export const getReader = dx.makeSelector(({ reader }) => reader);
 export const hasSession = dx.makeSelector(
     ({ reader }) => (reader !== null && reader.port !== null));
 export const getProvenance = dx.makeSelector(({ prov }) => prov);
+export const getFileName = dx.makeSelector(({ rawSrc }) => {
+    if (rawSrc === null) {
+        return null;
+    }
+    return rawSrc.name;
+});
 
 
 dx.makeReducer({

@@ -27,3 +27,7 @@ export const waitUntil = condition => (
         checkCondition();
     })
 );
+
+export const parseFileNameFromURL = urlString => (
+    (new URL(urlString)).pathname.split('/').pop()
+);

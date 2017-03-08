@@ -5,6 +5,16 @@ import queryString from 'query-string';
 
 import logo from './img/q2view.png';
 
+const fileNameStyle = {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    width: 'calc(100% - 450px)',
+    overflow: 'hidden',
+    fontSize: '16px',
+    float: 'none',
+    display: 'inline-block',
+    marginBottom: '0px'
+};
 
 export default class Menu extends React.Component {
     makeLinkProps(path, queryParams = {}) {
@@ -45,7 +55,11 @@ export default class Menu extends React.Component {
                     )}
                 </Navbar.Header>
                 {(this.props.hasVisualization || this.props.hasMetadata || this.props.hasProvenance) && ( // eslint-disable-line max-len
-                <Navbar.Collapse>
+                <Navbar.Collapse style={{ textAlign: 'center' }}>
+                    <Navbar.Text style={fileNameStyle} className="hidden-xs">
+                        Current File:
+                        <strong title={this.props.fileName}> {this.props.fileName}</strong>
+                    </Navbar.Text>
                     <Nav pullRight>
                         {this.props.hasVisualization && (
                         <NavItem
