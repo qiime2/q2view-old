@@ -1,14 +1,17 @@
 import React from 'react';
-import { NavItem, Navbar, Nav } from 'react-bootstrap';
+import { NavItem, Navbar, Nav, Dropdown } from 'react-bootstrap';
 
 import queryString from 'query-string';
+import LinkToggle from './LinkToggle';
 
 import logo from './img/q2view.png';
+import linkIcon from './img/link-grey.png';
+import downloadIcon from './img/download-grey.png';
 
 const fileNameStyle = {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: 'calc(100% - 450px)',
+    width: 'calc(100% - 505px)',
     overflow: 'hidden',
     fontSize: '16px',
     float: 'none',
@@ -57,7 +60,7 @@ export default class Menu extends React.Component {
                 {(this.props.hasVisualization || this.props.hasMetadata || this.props.hasProvenance) && ( // eslint-disable-line max-len
                 <Navbar.Collapse style={{ textAlign: 'center' }}>
                     <Navbar.Text style={fileNameStyle} className="hidden-xs">
-                        Current File:
+                        File:
                         <strong title={this.props.fileName}> {this.props.fileName}</strong>
                     </Navbar.Text>
                     <Nav pullRight>
@@ -84,6 +87,34 @@ export default class Menu extends React.Component {
                         >
                             Provenance
                         </NavItem>
+                    )}
+                        {this.props.downloadURL && (
+                        <div className="hidden-xs" style={{ margin: '13px', display: 'inline-block', float: 'left' }}>
+                            <Dropdown>
+                                <LinkToggle bsRole="toggle">
+                                    <img src={linkIcon} alt="Link" />
+                                </LinkToggle>
+                                <div className="dropdown-menu" style={{ padding: '10px' }} bsRole="menu">
+                                    <div style={{ marginBottom: '3px' }}>
+                                        <a href={window.document.location.toString()}>
+                                            Shareable Link:
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <input
+                                            readOnly
+                                            value={window.document.location.toString()}
+                                            type="text"
+                                            style={{ color: 'black' }}
+                                            onSelect={e => e.stopPropagation()}
+                                        />
+                                    </div>
+                                </div>
+                            </Dropdown>
+                            <a href={this.props.downloadURL} style={{ marginLeft: '20px' }}>
+                                <img src={downloadIcon} alt="Download" />
+                            </a>
+                        </div>
                     )}
                     </Nav>
                 </Navbar.Collapse>
