@@ -5,5 +5,5 @@ export default () => (dispatch, getState) => {
     dispatch(updateLoadMessage('initializing loopback session'));
     const reader = getReader(getState());
     reader.attachToServiceWorker();
-    return Promise.resolve(true);
+    return fetch('/_/wakeup');
 };
