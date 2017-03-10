@@ -21,6 +21,11 @@ self.addEventListener('fetch', (fetchEvent) => {
         return; // end of fetch
     }
 
+    if (url.pathname.toString() === '/_/wakeup') {
+        fetchEvent.respondWith(Promise.resolve(new Response('OK')));
+        return; // end of fetch
+    }
+
     const components = url.pathname.split('/').slice(2);  // discard '' and '_'
     const session = components[0];
     const uuid = components[1];
