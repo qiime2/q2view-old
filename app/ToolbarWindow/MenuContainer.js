@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 
 import { getMetadata } from '../pages/Peek/dux';
 import { hasProvenance } from '../pages/Provenance/dux';
-import { getFileName } from '../init/dux';
+import { getFileName, getDownload } from '../init/dux';
 
 import Menu from './Menu';
 
@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
         hasVisualization: metadata && metadata.type === 'Visualization',
         hasMetadata: !!metadata,
         hasProvenance: hasProvenance(state),
+        downloadURL: getDownload(state),
         fileName: getFileName(state)
     };
 };

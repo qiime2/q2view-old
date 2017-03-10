@@ -42,6 +42,12 @@ export const getFileName = dx.makeSelector(({ rawSrc }) => {
     }
     return rawSrc.name;
 });
+export const getDownload = dx.makeSelector(({ rawSrc }) => {
+    if (rawSrc !== null && rawSrc.from === 'remote') {
+        return rawSrc.data;
+    }
+    return null;
+});
 
 
 dx.makeReducer({
