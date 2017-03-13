@@ -1,3 +1,5 @@
+> This README is for developers and people interested in learning more about q2view. If you just need the functionality, q2view is already compiled and hosted at [https://view.qiime2.org](https://view.qiime2.org)
+
 # q2view
 
 This HTML 5 interface provides a way to view `.qza`/`.qzv` files produced by
