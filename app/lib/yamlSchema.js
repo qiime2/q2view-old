@@ -16,7 +16,13 @@ export default yaml.Schema.create([
     new yaml.Type('!metadata', {
         kind: 'scalar',
         resolve: data => data !== null,
-        construct: data => data
+        construct: (data) => {
+            const splitData = data.split(':');
+            if (splitData.length === 1) {
+                return { file: data, artifacts: [] };
+            }
+            return { file: splitData[1], artifacts: splitData[0].split(',') };
+        }
     }),
     new yaml.Type('!color', {
         kind: 'scalar',

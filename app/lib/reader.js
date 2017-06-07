@@ -125,8 +125,16 @@ export default class Reader {
                     const promises = [];
                     for (const inputMap of action.action.inputs) {
                         const inputUUID = Object.values(inputMap)[0];
-                        artifactsToAction[inputUUID] = action.execution.uuid;
                         promises.push(this._artifactMap(inputUUID));
+                    }
+                    for (const paramMap of action.action.parameters) {
+                        const param = Object.values(paramMap)[0];
+                        if (param !== null && typeof param === 'object'
+                                && Object.prototype.hasOwnProperty.call(param, 'artifacts')) {
+                            for (const artifactUUID of param.artifacts) {
+                                promises.push(this._artifactMap(artifactUUID));
+                            }
+                        }
                     }
                     Promise.all(promises).then(aList => (
                         Object.assign(artifactsToAction, ...aList)
@@ -149,6 +157,17 @@ export default class Reader {
                         const inputUUID = Object.values(inputMap)[0];
                         inputs[action.execution.uuid].add(inputMap);
                         promises.push(this._inputMap(inputUUID));
+                    }
+                    for (const paramMap of action.action.parameters) {
+                        const paramName = Object.keys(paramMap)[0];
+                        const param = Object.values(paramMap)[0];
+                        if (param !== null && typeof param === 'object'
+                                && Object.prototype.hasOwnProperty.call(param, 'artifacts')) {
+                            for (const artifactUUID of param.artifacts) {
+                                inputs[action.execution.uuid].add({ [paramName]: artifactUUID });
+                                promises.push(this._inputMap(artifactUUID));
+                            }
+                        }
                     }
                     Promise.all(promises).then(iList => (
                         Object.assign(inputs, ...iList)
