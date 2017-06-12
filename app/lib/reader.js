@@ -10,7 +10,7 @@ export default class Reader {
     static createReaderFromFile(file) {
         const jsZip = new JSZip();
         return jsZip.loadAsync(file).then((zip) => {
-            const error = new Error('Invalid  file');
+            const error = new Error('Not a valid QIIME 2 archive.');
             // Verify layout:
             // 1) Root dir named with UUID, only object in zip root
             // 2) UUID dir has a file named `VERSION`

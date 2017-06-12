@@ -1,6 +1,6 @@
 {
   "name": "q2view",
-  "version": "2017.2.0-dev0",
+  "version": "2017.6.0-dev0",
   "description": "View QIIME 2 Artifacts on the web!",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,8 @@
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.5",
     "react-dom": "^15.3.2",
-    "react-dropzone": "^3.7.0",
+    "react-dropzone": "^3.13.2",
+    "react-github-fork-ribbon": "^0.5.0",
     "react-json-tree": "^0.10.0",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.0",

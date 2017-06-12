@@ -6,12 +6,14 @@ import { initDux } from './init';
 import { loaderDux } from './Loader';
 import { peekDux } from './pages/Peek';
 import { provenanceDux } from './pages/Provenance';
+import { fromURLDux } from './pages/Home/FromURL';
 
 const appReducer = getDuxInRow(
     initDux,
     loaderDux,
     peekDux,
-    provenanceDux
+    provenanceDux,
+    fromURLDux
 );
 
 
