@@ -14,6 +14,7 @@ const extendConfig = require('./webpack.shared');
 
 const paths = [
     '/',
+    '/about',
     '/visualization',
     '/peek',
     '/provenance',

@@ -24,7 +24,7 @@ rules:
     react/jsx-indent-props: [error, 4]
     no-nested-ternary: off
     no-underscore-dangle: off
-    # this hurts so much, but I have no idea of the PropTypes logic in this
-    react/prop-types: warn
+    react/prop-types: off
+    jsx-a11y/no-static-element-interactions: warn
 env:
     browser: true

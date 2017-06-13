@@ -25,6 +25,7 @@ import Peek from './pages/Peek';
 import Provenance from './pages/Provenance';
 import BadURL from './pages/BadURL';
 import IncompatibleBrowser from './pages/IncompatibleBrowser';
+import About from './pages/About';
 import indexHTML from './index.html.handlebars';
 import { navigationAction } from './init';
 import { loadSuccess, updateLoadProgress } from './Loader/dux';
@@ -42,6 +43,7 @@ const makeRoutes = store => ( // eslint-disable-line no-unused-vars
         <Route path="peek" component={Peek} />
         <Route path="provenance" component={Provenance} />
         <Route path="incompatible-browser" component={IncompatibleBrowser} />
+        <Route path="about" component={About} />
         <Route path="*" component={BadURL} />
     </Route>
 );
@@ -84,7 +86,7 @@ export default (locals, callback) => {
     const location = history.createLocation(locals.path);  // the current path
     const routes = makeRoutes(store.dispatch);
 
-    if (locals.path === '/incompatible-browser' || locals.path === '/404.html') {
+    if (locals.path === '/incompatible-browser' || locals.path === '/404.html' || locals.path === '/about') {
         // skip loading bar
         store.dispatch(loadSuccess());
     }

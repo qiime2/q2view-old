@@ -41,7 +41,15 @@ export default class Menu extends React.Component {
 
     render() {
         return (
-            <Navbar>
+            <Navbar
+                style={{
+                    borderRadius: '0px',
+                    boxShadow: '0px 1px 5px #999',
+                    zIndex: 1,
+                    border: '0px',
+                    marginBottom: '21px'
+                }}
+            >
                 <Navbar.Header>
                     <Navbar.Brand>
                         {/* Hitting home *should* unload the document */}
@@ -49,7 +57,7 @@ export default class Menu extends React.Component {
                             <img
                                 style={{ height: '40px', marginTop: '-10px' }}
                                 src={logo}
-                                alt="QIIME 2"
+                                alt="QIIME 2 View"
                             />
                         </a>
                     </Navbar.Brand>

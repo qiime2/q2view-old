@@ -7,7 +7,20 @@ export const setBrowserCompatible = defineAction(
     'SET_BROWSER_COMPATIBLE', browserCompatible => ({ browserCompatible }));
 
 export const setRawSource = defineAction(
-    'SET_RAW_SOURCE', rawSrc => ({ rawSrc }));
+    'SET_RAW_SOURCE', (rawSrc) => {
+        if (rawSrc !== null && rawSrc.from === 'remote') {
+            const source = new URL(rawSrc.data);
+            if (source.hostname === 'www.dropbox.com') {
+                return {
+                    rawSrc: {
+                        ...rawSrc,
+                        data: `https://dl.dropbox.com${source.pathname}?dl=1`
+                    }
+                };
+            }
+        }
+        return ({ rawSrc });
+    });
 
 export const setSource = defineAction(
     'SET_SOURCE', src => ({ src }));

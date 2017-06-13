@@ -8,7 +8,7 @@ import { parseFileNameFromURL } from '../../lib/util';
 const mapDispatchToProps = dispatch => ({
     submitURL: (event) => {
         event.preventDefault();
-        const textInput = event.target[0];
+        const textInput = event.target[1];
         const url = textInput.value.trim();
         textInput.value = '';
         dispatch(setRawSource({

@@ -1,10 +1,14 @@
 import React from 'react';
+import { Alert } from 'react-bootstrap';
 
 import BaseCard from './BaseCard';
 
 const Failure = ({ reason, title }) => (
     <BaseCard title={title}>
-        <p>{ reason.toString() }</p>
+        <Alert bsStyle="danger">{ reason.toString() }</Alert>
+        <p><strong>
+            Please see the <a href="/about/#troubleshooting">troubleshooting section
+            </a> for assistance.</strong></p>
     </BaseCard>
 );
 
