@@ -23,7 +23,7 @@ export default () => (
         </p>
         <p>
             Additionally, q2view supports viewing externally hosted files, which means you can
-            provide a link to your file (for example on DropBox) and q2view will automatically
+            provide a link to your file (for example on Dropbox) and q2view will automatically
             download and display it. Better yet, the resulting pages are themselves shareable,
             so if a collaborator does not have QIIME 2, you can simply upload your results and
             share your q2view links with your collaborator. q2view will automatically fetch your
