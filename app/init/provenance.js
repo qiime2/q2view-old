@@ -29,7 +29,7 @@ export default () => (dispatch, getState) => {
             for (const mapping of actions[actionUUID]) {
                 edges.push({
                     data: {
-                        id: `${Object.values(mapping)[0]}to${actionUUID}`,
+                        id: `${Object.keys(mapping)[0]}_${Object.values(mapping)[0]}to${actionUUID}`,
                         param: Object.keys(mapping)[0],
                         source: Object.values(mapping)[0],
                         target: actionUUID
