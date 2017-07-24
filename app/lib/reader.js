@@ -125,7 +125,9 @@ export default class Reader {
                     const promises = [];
                     for (const inputMap of action.action.inputs) {
                         const inputUUID = Object.values(inputMap)[0];
-                        promises.push(this._artifactMap(inputUUID));
+                        if (inputUUID !== null) {
+                            promises.push(this._artifactMap(inputUUID));
+                        } // else  optional artifact
                     }
                     for (const paramMap of action.action.parameters) {
                         const param = Object.values(paramMap)[0];
@@ -155,8 +157,10 @@ export default class Reader {
                     const promises = [];
                     for (const inputMap of action.action.inputs) {
                         const inputUUID = Object.values(inputMap)[0];
-                        inputs[action.execution.uuid].add(inputMap);
-                        promises.push(this._inputMap(inputUUID));
+                        if (inputUUID !== null) {
+                            inputs[action.execution.uuid].add(inputMap);
+                            promises.push(this._inputMap(inputUUID));
+                        } // else optional artifact
                     }
                     for (const paramMap of action.action.parameters) {
                         const paramName = Object.keys(paramMap)[0];
