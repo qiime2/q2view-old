@@ -138,9 +138,13 @@ export default class Reader {
                             }
                         }
                     }
-                    Promise.all(promises).then(aList => (
-                        Object.assign(artifactsToAction, ...aList)
-                    )).then(resolve);
+                    if (promises.length !== 0) {
+                        Promise.all(promises).then(aList => (
+                            Object.assign(artifactsToAction, ...aList)
+                        )).then(resolve);
+                    } else {
+                        resolve(artifactsToAction); // no artifacts involved
+                    }
                 } else {
                     resolve(artifactsToAction);
                 }
@@ -173,11 +177,15 @@ export default class Reader {
                             }
                         }
                     }
-                    Promise.all(promises).then(iList => (
-                        Object.assign(inputs, ...iList)
-                    )).then(resolve);
+                    if (promises.length !== 0) {
+                        Promise.all(promises).then(iList => (
+                            Object.assign(inputs, ...iList)
+                        )).then(resolve);
+                    } else {
+                        resolve({}); // no artifacts involved
+                    }
                 } else {
-                    resolve(inputs);
+                    resolve({});
                 }
             }).catch(() => resolve({}));
         });
