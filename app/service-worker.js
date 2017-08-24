@@ -34,9 +34,12 @@ self.addEventListener('fetch', (fetchEvent) => {
     fetchEvent.respondWith(new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
         self.clients.matchAll().then(clients => clients.forEach((client) => {
             const channel = new MessageChannel();
-            channel.port1.onmessage = event => resolve(new Response(event.data));
+            channel.port1.onmessage = (event) => {
+                const blob = new Blob([event.data.byteArray], { type: event.data.type });
+                resolve(new Response(blob));
+            };
 
-            client.postMessage({ type: 'GET_BLOB', session, uuid, filename },
+            client.postMessage({ type: 'GET_DATA', session, uuid, filename },
                                [channel.port2]);
         }));
     }));

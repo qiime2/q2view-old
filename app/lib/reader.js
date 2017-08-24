@@ -76,10 +76,10 @@ export default class Reader {
                 return; // This message is meant for another tab.
             }
             switch (event.data.type) {
-            case 'GET_BLOB':
-                this._getFile(event.data.filename).then((blob) => {
+            case 'GET_DATA':
+                this._getFile(event.data.filename).then((data) => {
                     // the request should provide a port for later response
-                    event.ports[0].postMessage(blob);
+                    event.ports[0].postMessage(data);
                 }).catch(error => console.error(error));  // eslint-disable-line no-console
                 break;
             default:
@@ -98,13 +98,16 @@ export default class Reader {
         } else {
             filepromise = () => filehandle.async('uint8array');
         }
-        return filepromise().then(byteArray => (
-            new Blob([byteArray], { type: extmap[ext] || '' })
-        ));
+        return filepromise().then(byteArray => ({
+            byteArray,
+            type: extmap[ext] || ''
+        }));
     }
 
     _getYAML(relpath) {
-        return this._getFile(relpath).then(readBlobAsText)
+        return this._getFile(relpath)
+                   .then(data => new Blob([data.byteArray], { type: data.type }))
+                   .then(readBlobAsText)
                    .then(text => yaml.safeLoad(text, { schema }));
     }
 
