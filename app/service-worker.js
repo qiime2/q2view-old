@@ -36,7 +36,12 @@ self.addEventListener('fetch', (fetchEvent) => {
             const channel = new MessageChannel();
             channel.port1.onmessage = (event) => {
                 const blob = new Blob([event.data.byteArray], { type: event.data.type });
-                resolve(new Response(blob));
+                const init = {};
+                if (!event.data.type) {
+                    // unkown extension, so invoke download dialog
+                    init.headers = { 'Content-Disposition': 'attachment' };
+                }
+                resolve(new Response(blob, init));
             };
 
             client.postMessage({ type: 'GET_DATA', session, uuid, filename },
