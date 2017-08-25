@@ -38,7 +38,7 @@ self.addEventListener('fetch', (fetchEvent) => {
                 const blob = new Blob([event.data.byteArray], { type: event.data.type });
                 const init = {};
                 if (!event.data.type) {
-                    // unkown extension, so invoke download dialog
+                    // unknown extension, so invoke download dialog
                     init.headers = { 'Content-Disposition': 'attachment' };
                 }
                 resolve(new Response(blob, init));
