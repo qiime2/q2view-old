@@ -17,7 +17,6 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (fetchEvent) => {
     const url = new URL(fetchEvent.request.url);
     if (!url.pathname.startsWith('/_/')) {
-        fetchEvent.respondWith(fetch(fetchEvent.request));
         return; // end of fetch
     }
 
