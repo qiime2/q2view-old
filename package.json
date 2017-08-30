@@ -1,6 +1,6 @@
 {
   "name": "q2view",
-  "version": "0.0.0",
+  "version": "2017.6.0-dev0",
   "description": "View QIIME 2 Artifacts on the web!",
   "main": "index.js",
   "scripts": {

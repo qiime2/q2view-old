@@ -17,7 +17,8 @@ export default () => (
                 <p style={{ textAlign: 'right' }}>
                     <Button
                         bsStyle="primary"
-                        href={'/?type=html&src=https%3A%2F%2Fdata.qiime2.org%2Fgallery%2Ftaxa-bar-plots.qzv'}
+                        href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2017.5%2Fdata%2F' +
+                              'tutorials%2Fmoving-pictures%2Ftaxa-bar-plots.qzv'}
                     >Try it!</Button>
                 </p>
             </Thumbnail>
@@ -32,7 +33,8 @@ export default () => (
                 <p style={{ textAlign: 'right' }}>
                     <Button
                         bsStyle="primary"
-                        href={'/?type=html&src=https%3A%2F%2Fdata.qiime2.org%2Fgallery%2Ftable.qzv'}
+                        href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2017.5%2Fdata%2F' +
+                              'tutorials%2Fmoving-pictures%2Ftable.qzv'}
                     >Try it!</Button>
                 </p>
             </Thumbnail>
@@ -47,7 +49,9 @@ export default () => (
                 <p style={{ textAlign: 'right' }}>
                     <Button
                         bsStyle="primary"
-                        href={'/?type=html&src=https%3A%2F%2Fdata.qiime2.org%2Fgallery%2Funweighted-unifrac-emperor.qzv'}
+                        href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2017.5%2Fdata%2F' +
+                              'tutorials%2Fmoving-pictures%2Fcore-metrics-results%2Funweighted-' +
+                              'unifrac-emperor.qzv'}
                     >Try it!</Button>
                 </p>
             </Thumbnail>
