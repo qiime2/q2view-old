@@ -124,7 +124,8 @@ export default class Reader {
             this.getProvenanceAction(uuid).then((action) => {
                 const artifactsToAction = {};
                 artifactsToAction[uuid] = action.execution.uuid;
-                if (action.action.type === 'method' || action.action.type === 'visualizer') {
+                if (action.action.type === 'method' || action.action.type === 'visualizer'
+                        || action.action.type === 'pipeline') {
                     const promises = [];
                     for (const inputMap of action.action.inputs) {
                         const inputUUID = Object.values(inputMap)[0];
@@ -159,7 +160,8 @@ export default class Reader {
         return new Promise((resolve, reject) => {  // eslint-disable-line no-unused-vars
             this.getProvenanceAction(uuid).then((action) => {
                 const inputs = {};
-                if (action.action.type === 'method' || action.action.type === 'visualizer') {
+                if (action.action.type === 'method' || action.action.type === 'visualizer'
+                        || action.action.type === 'pipeline') {
                     inputs[action.execution.uuid] = new Set();
                     const promises = [];
                     for (const inputMap of action.action.inputs) {
