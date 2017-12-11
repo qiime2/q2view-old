@@ -28,5 +28,10 @@ export default yaml.Schema.create([
         kind: 'scalar',
         resolve: data => data !== null,
         construct: data => data
+    }),
+    new yaml.Type('!set', {
+        kind: 'sequence',
+        resolve: data => data !== null,
+        construct: data => data
     })
 ]);

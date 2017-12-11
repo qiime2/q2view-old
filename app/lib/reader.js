@@ -128,10 +128,14 @@ export default class Reader {
                         || action.action.type === 'pipeline') {
                     const promises = [];
                     for (const inputMap of action.action.inputs) {
-                        const inputUUID = Object.values(inputMap)[0];
-                        if (inputUUID !== null) {
-                            promises.push(this._artifactMap(inputUUID));
-                        } // else  optional artifact
+                        const entry = Object.values(inputMap)[0];
+                        if (typeof entry === 'string') {
+                            promises.push(this._artifactMap(entry));
+                        } else if (entry !== null) {
+                            for (const e of entry) {
+                                promises.push(this._artifactMap(e));
+                            }
+                        } // else optional artifact
                     }
                     for (const paramMap of action.action.parameters) {
                         const param = Object.values(paramMap)[0];
@@ -165,10 +169,16 @@ export default class Reader {
                     inputs[action.execution.uuid] = new Set();
                     const promises = [];
                     for (const inputMap of action.action.inputs) {
-                        const inputUUID = Object.values(inputMap)[0];
-                        if (inputUUID !== null) {
+                        const entry = Object.values(inputMap)[0];
+                        const inputName = Object.keys(inputMap)[0];
+                        if (typeof entry === 'string') {
                             inputs[action.execution.uuid].add(inputMap);
-                            promises.push(this._inputMap(inputUUID));
+                            promises.push(this._inputMap(entry));
+                        } else if (entry !== null) {
+                            for (const e of entry) {
+                                inputs[action.execution.uuid].add({ [inputName]: e });
+                                promises.push(this._inputMap(e));
+                            }
                         } // else optional artifact
                     }
                     for (const paramMap of action.action.parameters) {
