@@ -44,7 +44,7 @@ export default () => (
                 <h3>3D PCoA with Emperor</h3>
                 <p>
                     View the differences between sample composition using unweighted UniFrac in
-                    ordination space. Color the samples by different metadata categories.
+                    ordination space. Color the samples by different metadata columns.
                 </p>
                 <p style={{ textAlign: 'right' }}>
                     <Button
