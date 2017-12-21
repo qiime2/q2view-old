@@ -50,8 +50,8 @@ export default () => (
                     <Button
                         bsStyle="primary"
                         href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2017.12%2Fdata%2F' +
-                              'tutorials%2Fmoving-pictures%2Fcore-metrics-results%2Funweighted-' +
-                              'unifrac-emperor.qzv'}
+                              'tutorials%2Fmoving-pictures%2Fcore-metrics-results%2Funweighted_' +
+                              'unifrac_emperor.qzv'}
                     >Try it!</Button>
                 </p>
             </Thumbnail>
