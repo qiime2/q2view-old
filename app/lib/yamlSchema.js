@@ -33,5 +33,10 @@ export default yaml.Schema.create([
         kind: 'sequence',
         resolve: data => data !== null,
         construct: data => data
+    }),
+    new yaml.Type('!cite', {
+        kind: 'scalar',
+        resolve: data => data !== null,
+        construct: data => data
     })
 ]);

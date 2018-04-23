@@ -77,7 +77,8 @@ export default class Reader {
             }
             switch (event.data.type) {
             case 'GET_DATA':
-                this._getFile(event.data.filename).then((data) => {
+                // decode should go in the SW, but that'd require an upgrade
+                this._getFile(decodeURI(event.data.filename)).then((data) => {
                     // the request should provide a port for later response
                     event.ports[0].postMessage(data);
                 }).catch(error => console.error(error));  // eslint-disable-line no-console
