@@ -17,6 +17,9 @@ export const setHeight = defineAction(
 export const clearSelection = defineAction(
     'CLEAR_PROVENANCE_SELECTION');
 
+export const setCitationStyle = defineAction(
+    'SET_CITATION_STYLE', citationStyle => ({ citationStyle }));
+
 export const setSelection = ({ type, uuid }) => (dispatch, getState) => {
     const reader = getReader(getState());
     let selectionData = null;
@@ -37,7 +40,8 @@ const dx = new Dux('provenance', {
     viewTitle: 'Details',
     elements: null,
     exists: false,
-    height: 0
+    height: 0,
+    citationStyle: 'bibtex'
 });
 
 export const getElements = dx.makeSelector(({ elements }) => elements);
@@ -45,6 +49,7 @@ export const getViewTitle = dx.makeSelector(({ viewTitle }) => viewTitle);
 export const getHeight = dx.makeSelector(({ height }) => height);
 export const getSelection = dx.makeSelector(({ selection }) => selection);
 export const hasProvenance = dx.makeSelector(({ exists }) => exists);
+export const getCitationStyle = dx.makeSelector(({ citationStyle }) => citationStyle);
 
 dx.makeReducer({
     [setElements]: (state, { elements }) => ({
@@ -73,6 +78,10 @@ dx.makeReducer({
         ...state,
         viewTitle,
         exists: true
+    }),
+    [setCitationStyle]: (state, { citationStyle }) => ({
+        ...state,
+        citationStyle
     })
 });
 

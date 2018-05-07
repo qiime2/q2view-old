@@ -13,4 +13,4 @@ const mapDispatchToProps = dispatch => ({
     clearSelection: () => dispatch(clearSelection())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DAGView);
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(DAGView);

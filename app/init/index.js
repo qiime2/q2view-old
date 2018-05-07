@@ -6,10 +6,11 @@ import { redirectToDefault } from './redirect';
 import initSession from './session';
 import loadMetadata from './metadata';
 import loadProvenance from './provenance';
+import loadCitations from './citations';
 import { parseFileNameFromURL } from '../lib/util';
 
 import dx, { getBrowserCompatible, getServiceWorker, getRawSource, setRawSource,
-             getSource, hasSession, getProvenance, getFileName } from './dux';
+             getSource, hasSession, getProvenance, getFileName, getCitations } from './dux';
 import { loadSuccess, loadFailed, updateLoadProgress } from '../Loader/dux';
 import { getMetadata } from '../pages/Peek/dux';
 
@@ -103,6 +104,10 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
 
         if (!getProvenance(state)) {
             todo.push(loadProvenance);
+        }
+
+        if (!getCitations(state)) {
+            todo.push(loadCitations);
         }
 
         if (pathname === '/') {

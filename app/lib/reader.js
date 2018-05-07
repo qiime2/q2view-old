@@ -112,6 +112,20 @@ export default class Reader {
                    .then(text => yaml.safeLoad(text, { schema }));
     }
 
+    getCitations() {
+        if (this.zipReader.file(`${this.uuid}/provenance/citations.bib`) === null) {
+            return Promise.resolve(null);
+        }
+        const promises = [];
+        this.zipReader.folder(`${this.uuid}/provenance/`).forEach((relPath, file) => {
+            if (relPath.endsWith('citations.bib')) {
+                promises.push(file.async('text'));
+            }
+        });
+
+        return Promise.all(promises).then(array => array.join(''));
+    }
+
     getURLOfPath(relpath) {
         return `/_/${this.session}/${this.uuid}/${relpath}`;
     }

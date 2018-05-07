@@ -31,13 +31,17 @@ export const setReader = defineAction(
 export const setProvenance = defineAction(
     'SET_PROVENANCE', prov => ({ prov }));
 
+export const setCitations = defineAction(
+    'SET_CITATIONS', citations => ({ citations }));
+
 const dx = new Dux('init', {
     browserCompatible: null,
     sw: null,
     rawSrc: null,
     src: null,
     reader: null,
-    prov: null
+    prov: null,
+    citations: null
 });
 
 export const getBrowserCompatible = dx.makeSelector(
@@ -49,6 +53,7 @@ export const getReader = dx.makeSelector(({ reader }) => reader);
 export const hasSession = dx.makeSelector(
     ({ reader }) => (reader !== null && reader.port !== null));
 export const getProvenance = dx.makeSelector(({ prov }) => prov);
+export const getCitations = dx.makeSelector(({ citations }) => citations);
 export const getFileName = dx.makeSelector(({ rawSrc }) => {
     if (rawSrc === null) {
         return null;
@@ -87,6 +92,10 @@ dx.makeReducer({
     [setProvenance]: (state, { prov }) => ({
         ...state,
         prov
+    }),
+    [setCitations]: (state, { citations }) => ({
+        ...state,
+        citations
     })
 });
 

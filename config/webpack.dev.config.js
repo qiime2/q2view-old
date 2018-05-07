@@ -19,6 +19,7 @@ module.exports = extendConfig(config => ({
         })
     ],
     devServer: {
-        contentBase: 'build'
+        contentBase: 'build',
+        historyApiFallback: true
     }
 }), true);
