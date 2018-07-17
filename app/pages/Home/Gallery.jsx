@@ -5,8 +5,8 @@ import taxaThumb from './img/taxa_thumb.png';
 import summarizeThumb from './img/summarize_thumb.png';
 import emperorThumb from './img/emperor_thumb.png';
 import volatilityThumb from './img/volatility_thumb.png';
-import alpharareThumb from './img/alpha_rarefaction_thumb.png';
-import alphasigThumb from './img/alpha_significance_thumb.png';
+import alphaRareThumb from './img/alpha_rarefaction_thumb.png';
+import alphaSigThumb from './img/alpha_significance_thumb.png';
 
 export default () => (
     <div>
@@ -21,7 +21,7 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.4%2Fdata%2F' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata%2F' +
                                   'tutorials%2Fmoving-pictures%2Ftaxa-bar-plots.qzv'}
                         >Try it!</Button>
                     </p>
@@ -53,7 +53,7 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.4%2Fdata%2F' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata%2F' +
                                   'tutorials%2Fmoving-pictures%2Fcore-metrics-results%2Funweighted_' +
                                   'unifrac_emperor.qzv'}
                         >Try it!</Button>
@@ -73,14 +73,14 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.4%2Fdata%2F' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata%2F' +
                                   'tutorials%2Fmoving-pictures%2Ftable.qzv'}
                         >Try it!</Button>
                     </p>
                 </Thumbnail>
             </Col>
             <Col xs={6} md={4}>
-                <Thumbnail src={alpharareThumb} alt="Alpha Rarefaction Plots">
+                <Thumbnail src={alphaRareThumb} alt="Alpha Rarefaction Plots">
                     <h3>Alpha Rarefaction Plots</h3>
                     <p>
                         Explore alpha diversity as a function of sampling depth using the
@@ -96,7 +96,7 @@ export default () => (
                 </Thumbnail>
             </Col>
             <Col xs={6} md={4}>
-                <Thumbnail src={alphasigThumb} alt="Alpha Diversity Boxplots">
+                <Thumbnail src={alphaSigThumb} alt="Alpha Diversity Boxplots">
                     <h3>Alpha Diversity Boxplots</h3>
                     <p>
                         View the association between categorical metadata columns and alpha
