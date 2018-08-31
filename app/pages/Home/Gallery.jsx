@@ -21,7 +21,7 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata%2F' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.8%2Fdata%2F' +
                                   'tutorials%2Fmoving-pictures%2Ftaxa-bar-plots.qzv'}
                         >Try it!</Button>
                     </p>
@@ -37,7 +37,7 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.8%2Fdata' +
                                   '%2Ftutorials%2Flongitudinal%2Fvolatility.qzv'}
                         >Try it!</Button>
                     </p>
@@ -53,7 +53,7 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata%2F' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.8%2Fdata%2F' +
                                   'tutorials%2Fmoving-pictures%2Fcore-metrics-results%2Funweighted_' +
                                   'unifrac_emperor.qzv'}
                         >Try it!</Button>
@@ -73,7 +73,7 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata%2F' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.8%2Fdata%2F' +
                                   'tutorials%2Fmoving-pictures%2Ftable.qzv'}
                         >Try it!</Button>
                     </p>
@@ -89,7 +89,7 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata%2F' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.8%2Fdata%2F' +
                                   'tutorials%2Fmoving-pictures%2Falpha-rarefaction.qzv'}
                         >Try it!</Button>
                     </p>
@@ -105,7 +105,7 @@ export default () => (
                     <p style={{ textAlign: 'right' }}>
                         <Button
                             bsStyle="primary"
-                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.6%2Fdata%2Ftutorials' +
+                            href={'/?type=html&src=https%3A%2F%2Fdocs.qiime2.org%2F2018.8%2Fdata%2Ftutorials' +
                                   '%2Fmoving-pictures%2Fcore-metrics-results%2Ffaith-pd-group-significance.qzv'}
                         >Try it!</Button>
                     </p>
