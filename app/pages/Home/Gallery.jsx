@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Thumbnail, Button} from 'react-bootstrap';
+import { Row, Col, Thumbnail, Button } from 'react-bootstrap';
 
 import taxaThumb from './img/taxa_thumb.png';
 import summarizeThumb from './img/summarize_thumb.png';
