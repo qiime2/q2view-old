@@ -17,7 +17,7 @@ export const redirectToDefault = () => (dispatch, getState) => {
     if (type === 'Visualization') {
         dispatch(redirect(`/visualization/?type=html&src=${src}`));
     } else {
-        dispatch(redirect(`/peek/?src=${src}`));
+        dispatch(redirect(`/details/?src=${src}`));
     }
 
     return Promise.resolve();

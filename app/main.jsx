@@ -40,7 +40,7 @@ const makeRoutes = store => ( // eslint-disable-line no-unused-vars
     <Route path="/" component={ToolbarWindow} >
         <IndexRoute component={Home} />
         <Route path="visualization" component={Visualization} />
-        <Route path="peek" component={Peek} />
+        <Route path="details" component={Peek} />
         <Route path="provenance" component={Provenance} />
         <Route path="incompatible-browser" component={IncompatibleBrowser} />
         <Route path="about" component={About} />

@@ -82,10 +82,10 @@ export default class Menu extends React.Component {
                     )}
                         {this.props.hasMetadata && (
                         <NavItem
-                            {...this.makeLinkProps('/peek')}
-                            className={(this.props.location.pathname === '/peek/') ? 'active' : ''}
+                            {...this.makeLinkProps('/details')}
+                            className={(this.props.location.pathname === '/details/') ? 'active' : ''}
                         >
-                            Peek
+                            Details
                         </NavItem>
                     )}
                         {this.props.hasProvenance && (
@@ -97,7 +97,7 @@ export default class Menu extends React.Component {
                         </NavItem>
                     )}
                         {this.props.downloadURL && (
-                        <div className="hidden-xs" style={{ margin: '13px', display: 'inline-block', float: 'left' }}>
+                        <div className="hidden-xs" style={{ margin: '13px 10px 13px 10px', display: 'inline-block', float: 'left' }}>
                             <Dropdown>
                                 <LinkToggle bsRole="toggle">
                                     <img src={linkIcon} alt="Link" />
