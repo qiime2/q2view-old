@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getCitations, getReader } from '../../init/dux';
-import { getCitationStyle, setCitationStyle } from './dux';
+import { getCitationStyle, setCitationStyle } from '../Provenance/dux';
 
 
 const component = ({ citations, uuid, citationStyle, dispatchSetCitationStyle }) => {
@@ -19,7 +19,6 @@ const component = ({ citations, uuid, citationStyle, dispatchSetCitationStyle })
             id="citation-style" value={citationStyle} onChange={dispatchSetCitationStyle}
         >
             <option value="bibtex">BibTeX</option>
-            <option value="apa">APA</option>
         </select>
         </label>
         <a href={download} download={`${uuid}.bib`} style={{ float: 'right' }}><b>Download</b></a>

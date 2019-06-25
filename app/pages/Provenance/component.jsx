@@ -40,8 +40,9 @@ class CytoTabs extends React.Component {
                 </Tab>
                 <Tab eventKey={2} title="Citations">
                     <div style={{ marginTop: '20px' }}>
-                        <p>Citations have moved! Please follow this
-                            <a {...this.props.goToDetailsProps}> Link </a>
+                        <p>Citations have moved! Please follow <a
+                            {...this.props.goToDetailsProps}
+                        >this link</a>.
                         </p>
                     </div>
                 </Tab>

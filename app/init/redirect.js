@@ -1,6 +1,6 @@
 import { push } from 'react-router-redux';
 import { updateLoadMessage } from '../Loader/dux';
-import { getMetadata } from '../pages/Peek/dux';
+import { getMetadata } from '../pages/Details/dux';
 import { getSource } from './dux';
 
 const redirect = path => (dispatch) => {
