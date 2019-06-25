@@ -11,7 +11,7 @@ import downloadIcon from './img/download-grey.png';
 const fileNameStyle = {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: 'calc(100% - 505px)',
+    width: 'calc(100% - 515px)',
     overflow: 'hidden',
     fontSize: '16px',
     float: 'none',
@@ -97,7 +97,7 @@ export default class Menu extends React.Component {
                         </NavItem>
                     )}
                         {this.props.downloadURL && (
-                        <div className="hidden-xs" style={{ margin: '13px 10px 13px 10px', display: 'inline-block', float: 'left' }}>
+                        <div className="hidden-xs" style={{ margin: '13px', display: 'inline-block', float: 'left' }}>
                             <Dropdown>
                                 <LinkToggle bsRole="toggle">
                                     <img src={linkIcon} alt="Link" />
