@@ -1,10 +1,8 @@
 import React from 'react';
-
 import { Grid, Row, Col, Panel, Tab, Tabs } from 'react-bootstrap';
 
 import DAGView from './dagContainer';
 import SelectionView from './selectionContainer';
-import Citations from './citations';
 
 
 const Pane = ({ children }) => (
@@ -41,18 +39,23 @@ class CytoTabs extends React.Component {
                     <DAGView ref={(node) => { this.cyNode = node; }} />
                 </Tab>
                 <Tab eventKey={2} title="Citations">
-                    <Citations />
+                    <div style={{ marginTop: '20px' }}>
+                        <p>Citations have moved! Please follow <a
+                            {...this.props.goToDetailsProps}
+                        >this link</a>.
+                        </p>
+                    </div>
                 </Tab>
             </Tabs>
         );
     }
 }
 
-export default ({ viewTitle }) => (
+export default ({ viewTitle, goToDetailsProps }) => (
     <Grid>
         <Row style={{ marginTop: '30px' }}>
             <Col md={7}>
-                <CytoTabs />
+                <CytoTabs goToDetailsProps={goToDetailsProps} />
             </Col>
             <Col md={5}>
                 <Panel header={(<h3>{ viewTitle }</h3>)}>

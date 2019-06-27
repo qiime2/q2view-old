@@ -4,14 +4,14 @@ import { getDuxInRow } from './lib/dx';
 
 import { initDux } from './init';
 import { loaderDux } from './Loader';
-import { peekDux } from './pages/Peek';
+import { detailsDux } from './pages/Details';
 import { provenanceDux } from './pages/Provenance';
 import { fromURLDux } from './pages/Home/FromURL';
 
 const appReducer = getDuxInRow(
     initDux,
     loaderDux,
-    peekDux,
+    detailsDux,
     provenanceDux,
     fromURLDux
 );

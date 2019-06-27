@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { getMetadata } from '../pages/Peek/dux';
+import { getMetadata } from '../pages/Details/dux';
 import { hasProvenance } from '../pages/Provenance/dux';
 import { getFileName, getDownload } from '../init/dux';
 
