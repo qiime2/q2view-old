@@ -16,7 +16,7 @@ const paths = [
     '/',
     '/about',
     '/visualization',
-    '/peek',
+    '/details',
     '/provenance',
     '/incompatible-browser',
     '/404.html'

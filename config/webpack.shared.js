@@ -40,10 +40,11 @@ module.exports = function extendConfig(override, isDev) {
             })
         ],
         resolve: {
-            extensions: ['', '.js', '.jsx']
+            extensions: ['', '.js', '.json', '.jsx']
         },
         module: {
             loaders: [
+                { test: /\.json$/, loader: 'json-loader' },
                 {
                     test: /\.png$/,
                     // inline files < 5kb
@@ -65,7 +66,8 @@ module.exports = function extendConfig(override, isDev) {
                 {
                     test: /\.handlebars$/,
                     loader: 'handlebars'
-                }
+                },
+                { test: /\.csl$/, loader: 'raw-loader' }
             ]
         }
     };
