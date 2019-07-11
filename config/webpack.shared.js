@@ -67,7 +67,10 @@ module.exports = function extendConfig(override, isDev) {
                     test: /\.handlebars$/,
                     loader: 'handlebars'
                 },
-                { test: /\.csl$/, loader: 'raw-loader' }
+                {
+                    test: /\.csl$/,
+                    loader: 'raw-loader'
+                }
             ]
         }
     };

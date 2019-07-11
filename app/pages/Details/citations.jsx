@@ -70,6 +70,7 @@ const component = ({ citations, uuid, citationStyle, dispatchSetCitationStyle })
             <option value="cell">Cell</option>
             <option value="chicago">Chicago</option>
             <option value="mla">MLA</option>
+            <option value="nature">Nature</option>
             <option value="ris">RIS</option>
         </select>
         </label>
