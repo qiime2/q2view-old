@@ -18,11 +18,10 @@ export const resolveURL = () => (dispatch, getState) => {
 
     return fetch(rawSrc.data, { method: 'HEAD', mode: 'cors' })
         .then((response) => {
-            if (response.ok) {
-                return fetch(rawSrc.data).then(res => res.blob());
-            } else {
+            if (!response.ok) {
                 throw Error(`Network error, recieved ${response.status} from server.`);
             }
+            return fetch(rawSrc.data).then(res => res.blob());
         }).then(Reader.createReaderFromFile).then((reader) => {
             dispatch(setSource(encodeURIComponent(rawSrc.data)));
             dispatch(setReader(reader));
