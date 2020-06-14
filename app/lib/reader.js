@@ -95,7 +95,7 @@ export default class Reader {
         const filehandle = this.zipReader.file(`${this.uuid}/${relpath}`);
         let filepromise = null;
         if (filehandle === null) {
-            filepromise = () => Promise.reject('No such file.');
+            filepromise = () => Promise.reject('No such file: ' + `${this.uuid}/${relpath}`);
         } else {
             filepromise = () => filehandle.async('uint8array');
         }
