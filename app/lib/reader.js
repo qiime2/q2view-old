@@ -92,10 +92,11 @@ export default class Reader {
 
     _getFile(relpath) {
         const ext = relpath.split('.').pop();
-        const filehandle = this.zipReader.file(`${this.uuid}/${relpath}`);
+        const fp = `${this.uuid}/${relpath}`;
+        const filehandle = this.zipReader.file(fp);
         let filepromise = null;
         if (filehandle === null) {
-            filepromise = () => Promise.reject('No such file: ' + `${this.uuid}/${relpath}`);
+            filepromise = () => Promise.reject(`No such file: ${fp}`);
         } else {
             filepromise = () => filehandle.async('uint8array');
         }
