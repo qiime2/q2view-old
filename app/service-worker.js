@@ -25,10 +25,10 @@ self.addEventListener('fetch', (fetchEvent) => {
         return; // end of fetch
     }
 
-    const components = url.pathname.split('/').slice(2);  // discard '' and '_'
+    const components = url.pathname.split('/').slice(2); // discard '' and '_'
     const session = components[0];
     const uuid = components[1];
-    const filename = components.slice(2).join('/');  // everything but session/uuid
+    const filename = components.slice(2).join('/'); // everything but session/uuid
 
     fetchEvent.respondWith(new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
         self.clients.matchAll().then(clients => clients.forEach((client) => {
@@ -44,7 +44,7 @@ self.addEventListener('fetch', (fetchEvent) => {
             };
 
             client.postMessage({ type: 'GET_DATA', session, uuid, filename },
-                               [channel.port2]);
+                [channel.port2]);
         }));
     }));
 });

@@ -15,11 +15,11 @@ const component = ({ citations, uuid, citationStyle, dispatchSetCitationStyle })
 
     return (<div style={{ marginTop: '5px' }}>
         <label htmlFor="citation-style">
-        Citation Format: <select
-            id="citation-style" value={citationStyle} onChange={dispatchSetCitationStyle}
-        >
-            <option value="bibtex">BibTeX</option>
-        </select>
+            Citation Format: <select
+                id="citation-style" value={citationStyle} onChange={dispatchSetCitationStyle}
+            >
+                <option value="bibtex">BibTeX</option>
+            </select>
         </label>
         <a href={download} download={`${uuid}.bib`} style={{ float: 'right' }}><b>Download</b></a>
         <pre>{ citations }</pre>

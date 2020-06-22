@@ -16,7 +16,7 @@ export default () => (dispatch, getState) => {
                 return 0;
             }
             return 1 + Math.max(...Array.from(actions[artifacts[uuid]]).map(mapping =>
-              findMaxDepth(Object.values(mapping)[0])));
+                findMaxDepth(Object.values(mapping)[0])));
         };
 
 
