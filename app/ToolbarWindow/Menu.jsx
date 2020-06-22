@@ -11,7 +11,7 @@ import downloadIcon from './img/download-grey.png';
 const fileNameStyle = {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: 'calc(100% - 505px)',
+    width: 'calc(100% - 515px)',
     overflow: 'hidden',
     fontSize: '16px',
     float: 'none',
@@ -82,10 +82,10 @@ export default class Menu extends React.Component {
                     )}
                         {this.props.hasMetadata && (
                         <NavItem
-                            {...this.makeLinkProps('/peek')}
-                            className={(this.props.location.pathname === '/peek/') ? 'active' : ''}
+                            {...this.makeLinkProps('/details')}
+                            className={(this.props.location.pathname === '/details/') ? 'active' : ''}
                         >
-                            Peek
+                            Details
                         </NavItem>
                     )}
                         {this.props.hasProvenance && (

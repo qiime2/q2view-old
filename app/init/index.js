@@ -12,13 +12,13 @@ import { parseFileNameFromURL } from '../lib/util';
 import dx, { getBrowserCompatible, getServiceWorker, getRawSource, setRawSource,
              getSource, hasSession, getProvenance, getFileName, getCitations } from './dux';
 import { loadSuccess, loadFailed, updateLoadProgress } from '../Loader/dux';
-import { getMetadata } from '../pages/Peek/dux';
+import { getMetadata } from '../pages/Details/dux';
 
 
 export { dx as initDux };
 
 const requireResult = Object.create(null);
-requireResult['/peek/'] = true;
+requireResult['/details/'] = true;
 requireResult['/visualization/'] = true;
 requireResult['/provenance/'] = true;
 

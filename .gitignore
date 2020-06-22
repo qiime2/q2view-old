@@ -52,3 +52,6 @@ dist/
 
 # vi
 .*.swp
+
+# Mac Users
+.DS_Store

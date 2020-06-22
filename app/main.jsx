@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// Copyright (c) 2016-2018, QIIME 2 development team.
+// Copyright (c) 2016-2020, QIIME 2 development team.
 //
 // Distributed under the terms of the Modified BSD License.
 //
@@ -21,7 +21,7 @@ import rootReducer from './reducer';
 import ToolbarWindow from './ToolbarWindow';
 import Home from './pages/Home';
 import Visualization from './pages/Visualization';
-import Peek from './pages/Peek';
+import Details from './pages/Details';
 import Provenance from './pages/Provenance';
 import BadURL from './pages/BadURL';
 import IncompatibleBrowser from './pages/IncompatibleBrowser';
@@ -40,7 +40,7 @@ const makeRoutes = store => ( // eslint-disable-line no-unused-vars
     <Route path="/" component={ToolbarWindow} >
         <IndexRoute component={Home} />
         <Route path="visualization" component={Visualization} />
-        <Route path="peek" component={Peek} />
+        <Route path="details" component={Details} />
         <Route path="provenance" component={Provenance} />
         <Route path="incompatible-browser" component={IncompatibleBrowser} />
         <Route path="about" component={About} />
