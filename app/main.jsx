@@ -10,7 +10,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 import { Router, RouterContext, match, createMemoryHistory, browserHistory,
-         IndexRoute, Route } from 'react-router';
+    IndexRoute, Route } from 'react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
@@ -57,8 +57,8 @@ const makeMiddleware = history => applyMiddleware(
 if (typeof document !== 'undefined') {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     const store = createStore(rootReducer,
-                              window.__DEHYDRATED_STORE__,
-                              composeEnhancers(makeMiddleware(browserHistory)));
+        window.__DEHYDRATED_STORE__,
+        composeEnhancers(makeMiddleware(browserHistory)));
     const history = syncHistoryWithStore(browserHistory, store);
 
     ReactDOM.render((
@@ -83,7 +83,7 @@ export default (locals, callback) => {
     let history = createMemoryHistory();
     const store = createStore(rootReducer, makeMiddleware(history));
     history = syncHistoryWithStore(history, store);
-    const location = history.createLocation(locals.path);  // the current path
+    const location = history.createLocation(locals.path); // the current path
     const routes = makeRoutes(store.dispatch);
 
     if (locals.path === '/incompatible-browser' || locals.path === '/404.html' || locals.path === '/about') {

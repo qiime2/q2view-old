@@ -32,7 +32,7 @@ dx.makeReducer({
         message: state.message || '',
         progress
     }),
-    [loadSuccess]: (state, action) => ({  // eslint-disable-line no-unused-vars
+    [loadSuccess]: (state, action) => ({ // eslint-disable-line no-unused-vars
         active: false,
         success: true
     }),

@@ -23,11 +23,11 @@ export default class Reader {
                 }
             });
             const uniquePaths = parsedPaths.filter((value, index, self) =>
-              self.indexOf(value) === index
+                self.indexOf(value) === index
             );
 
             // http://stackoverflow.com/a/13653180
-            const uuidRegEx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;  // eslint-disable-line max-len
+            const uuidRegEx = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i; // eslint-disable-line max-len
             let allInUUID = true;
             uniquePaths.every((path) => {
                 const parts = path.split('/');
@@ -54,9 +54,9 @@ export default class Reader {
         });
     }
 
-    static createReaderFromURL(url) {  // eslint-disable-line no-unused-vars
+    static createReaderFromURL(url) { // eslint-disable-line no-unused-vars
         // TODO, be smurter and make this someday
-        return new Promise((resolve, reject) => {  // eslint-disable-line no-unused-vars
+        return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
 
         });
     }
@@ -81,10 +81,10 @@ export default class Reader {
                 this._getFile(decodeURI(event.data.filename)).then((data) => {
                     // the request should provide a port for later response
                     event.ports[0].postMessage(data);
-                }).catch(error => console.error(error));  // eslint-disable-line no-console
+                }).catch(error => console.error(error)); // eslint-disable-line no-console
                 break;
             default:
-                console.log(`Unknown SW event type: ${event.data.type}`);  // eslint-disable-line no-console
+                console.log(`Unknown SW event type: ${event.data.type}`); // eslint-disable-line no-console
                 break;
             }
         };
@@ -92,10 +92,11 @@ export default class Reader {
 
     _getFile(relpath) {
         const ext = relpath.split('.').pop();
-        const filehandle = this.zipReader.file(`${this.uuid}/${relpath}`);
+        const fp = `${this.uuid}/${relpath}`;
+        const filehandle = this.zipReader.file(fp);
         let filepromise = null;
         if (filehandle === null) {
-            filepromise = () => Promise.reject('No such file.');
+            filepromise = () => Promise.reject(`No such file: ${fp}`);
         } else {
             filepromise = () => filehandle.async('uint8array');
         }
@@ -107,9 +108,9 @@ export default class Reader {
 
     _getYAML(relpath) {
         return this._getFile(relpath)
-                   .then(data => new Blob([data.byteArray], { type: data.type }))
-                   .then(readBlobAsText)
-                   .then(text => yaml.safeLoad(text, { schema }));
+            .then(data => new Blob([data.byteArray], { type: data.type }))
+            .then(readBlobAsText)
+            .then(text => yaml.safeLoad(text, { schema }));
     }
 
     getCitations() {
@@ -135,7 +136,7 @@ export default class Reader {
     }
 
     _artifactMap(uuid) {
-        return new Promise((resolve, reject) => {  // eslint-disable-line no-unused-vars
+        return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
             this.getProvenanceAction(uuid).then((action) => {
                 const artifactsToAction = {};
                 artifactsToAction[uuid] = action.execution.uuid;
@@ -176,7 +177,7 @@ export default class Reader {
     }
 
     _inputMap(uuid) {
-        return new Promise((resolve, reject) => {  // eslint-disable-line no-unused-vars
+        return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
             this.getProvenanceAction(uuid).then((action) => {
                 const inputs = {};
                 if (action.action.type === 'method' || action.action.type === 'visualizer'

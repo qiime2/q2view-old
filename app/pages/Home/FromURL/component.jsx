@@ -8,8 +8,9 @@ const linkStyle = {
     cursor: 'pointer'
 };
 
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 export default ({ submit, view, dispatchViewDropbox, dispatchViewExternalURL,
-                  dispatchDefault }) => {
+    dispatchDefault }) => {
     let dom = null;
     switch (view) {
     case 'DROPBOX':

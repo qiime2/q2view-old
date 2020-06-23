@@ -10,7 +10,7 @@ import loadCitations from './citations';
 import { parseFileNameFromURL } from '../lib/util';
 
 import dx, { getBrowserCompatible, getServiceWorker, getRawSource, setRawSource,
-             getSource, hasSession, getProvenance, getFileName, getCitations } from './dux';
+    getSource, hasSession, getProvenance, getFileName, getCitations } from './dux';
 import { loadSuccess, loadFailed, updateLoadProgress } from '../Loader/dux';
 import { getMetadata } from '../pages/Details/dux';
 
@@ -73,7 +73,7 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
                 // first time load, prevent accidental navigation away
                 window.addEventListener('beforeunload', (event) => {
                     const confirmationMessage = 'You will lose your current view.';
-                    event.returnValue = confirmationMessage;  // eslint-disable-line no-param-reassign, max-len
+                    event.returnValue = confirmationMessage; // eslint-disable-line no-param-reassign, max-len
                     return confirmationMessage;
                 });
             }
@@ -118,7 +118,7 @@ export const navigationAction = ({ pathname, query, search, action }) => (dispat
     const traverseTodo = (i) => {
         if (i < todo.length) {
             dispatch(todo[i]()).then(() => {
-                i += 1;  // eslint-disable-line no-param-reassign
+                i += 1; // eslint-disable-line no-param-reassign
                 dispatch(updateLoadProgress(i / todo.length));
                 traverseTodo(i);
             }).catch((error) => {
