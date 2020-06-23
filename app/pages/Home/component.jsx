@@ -11,7 +11,7 @@ export default ({ submitFile, submitURL, redirectTo }) => (
         <Row>
             <Col md={12}>
                 <p style={{ fontSize: '18px' }}>
-                    EXAMPLE This interface can view .qza and .qzv files
+                    This interface can view .qza and .qzv files
                     directly in your browser without uploading to a server.
                     <Link to="/about">Click here</Link> to learn more.
                 </p>
