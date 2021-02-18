@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout source
+      uses: actions/checkout@v2
+
+    - name: set up node
+      uses: actions/setup-node@v2
+
+    - name: test
+      run: npm test
+
+    - name: test
+      run: npm run build
