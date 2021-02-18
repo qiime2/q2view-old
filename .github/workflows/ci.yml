@@ -16,8 +16,11 @@ jobs:
     - name: set up node
       uses: actions/setup-node@v2
 
+    - name: install dependencies
+      run: npm install
+
     - name: test
       run: npm test
 
-    - name: test
+    - name: build
       run: npm run build
