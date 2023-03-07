@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-node@v2
 
     - name: install dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
 
     - name: test
       run: npm test
