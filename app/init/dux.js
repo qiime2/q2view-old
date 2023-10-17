@@ -11,12 +11,10 @@ export const setRawSource = defineAction(
         if (rawSrc !== null && rawSrc.from === 'remote') {
             const source = new URL(rawSrc.data);
             if (source.hostname === 'www.dropbox.com') {
-                return {
-                    rawSrc: {
-                        ...rawSrc,
-                        data: `https://dl.dropbox.com${source.pathname}?dl=1`
-                    }
-                };
+                source.searchParams.set('dl', '1');
+                const path = `${source.pathname}?${source.searchParams}`
+                const data = `https://dl.dropboxusercontent.com${path}`
+                return { rawSrc: { ...rawSrc, data } };
             }
         }
         return ({ rawSrc });
